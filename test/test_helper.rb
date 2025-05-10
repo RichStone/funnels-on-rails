@@ -54,7 +54,9 @@ end
 # We add it last because doing so make the visible test output a little cleaner.
 reporters.push Minitest::Reporters::JUnitReporter.new if ENV["CI"]
 
-Minitest::Reporters.use! reporters
+unless ENV['RM_INFO']
+  Minitest::Reporters.use! reporters
+end
 
 require "parallel_tests/test/runtime_logger" if ENV["PARALLEL_TESTS_RECORD_RUNTIME"]
 
