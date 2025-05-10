@@ -1,11 +1,11 @@
 en:
   application:
-    name: Untitled Application
+    name: Funnels On Rails
     owner: Unidentified Developer
     description: "You can update this description in `config/locales/en/application.en.yml`."
-    keywords: untitled application seo keywords
+    keywords: funnels on rails seo keywords
     support_email: change.me@localhost
-    key: untitled_application
+    key: funnels_on_rails
   webhooks/outgoing/endpoints:
     fields:
       api_version:
