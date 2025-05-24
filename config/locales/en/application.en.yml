@@ -1,10 +1,10 @@
 en:
   application:
     name: Funnels On Rails
-    owner: Unidentified Developer
-    description: "You can update this description in `config/locales/en/application.en.yml`."
-    keywords: funnels on rails seo keywords
-    support_email: change.me@localhost
+    owner: Rich Steinmetz
+    description: A Bullet Train sample app showcasing how to run your SaaS marketing-first with ClickFunnels
+    keywords: funnels on rails seo keywords marketing saas bullet train tutorial
+    support_email: hey+support@richsteinmetz.com
     key: funnels_on_rails
   webhooks/outgoing/endpoints:
     fields:

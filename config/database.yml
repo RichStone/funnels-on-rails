@@ -88,6 +88,8 @@ test:
 production:
   <<: *default
   database: funnels_on_rails_production
-  username: funnels_on_rails
+  username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['FUNNELS_ON_RAILS_DATABASE_PASSWORD'] %>
-  url: <%= ENV['DATABASE_URL'] %>
+  #  url: <%#= ENV['DATABASE_URL'] %>
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>

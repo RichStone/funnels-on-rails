@@ -124,10 +124,10 @@ Rails.application.configure do
   # instead, you should add yours after the comment toward the
   # end of this file. 🚫 ✌️
 
-  if ENV["POSTMARK_API_TOKEN"].present?
+  if ENV["POSTMARK_FOR_API_TOKEN"].present?
     config.action_mailer.delivery_method = :postmark
     config.action_mailer.postmark_settings = {
-      api_token: ENV["POSTMARK_API_TOKEN"]
+      api_token: ENV["POSTMARK_FOR_API_TOKEN"]
     }
 
   elsif ENV["MAILGUN_SMTP_SERVER"].present?

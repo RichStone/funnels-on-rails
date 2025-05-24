@@ -209,7 +209,7 @@ end
 
 group :production do
   # We suggest using Postmark for email deliverability.
-  # gem "postmark-rails"
+  gem "postmark-rails"
 
   # If you're hosting on Heroku, this service is highly recommended for autoscaling of dynos.
   # gem "rails_autoscale_agent"

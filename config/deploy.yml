@@ -1,0 +1,76 @@
+# This deploy.yml assumes the following prerequisites:
+#   - You have a Docker Hub account with a `docker-hub-username`.
+#   - You have a server you can SSH into.
+#   - You have a domain name that you own and will point to your server's IP address.
+#
+# Name of your application. Used to uniquely configure containers.
+service: funnels-on-rails
+
+# Name of the container image.
+image: richwhale/funnels-on-rails
+
+# Deploy to these servers.
+servers:
+  web:
+    - 157.180.26.31
+  job:
+    hosts:
+      - 157.180.26.31
+    cmd: bundle exec sidekiq
+
+# Enable SSL auto certification via Let's Encrypt and allow for multiple apps on
+# a single web server. Remove this section when using multiple web servers and
+# ensure you terminate SSL at your load balancer.
+#
+# Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to
+# enable CF-to-app encryption.
+proxy:
+  ssl: true
+  host: app.funnelsonrails.com
+  app_port: 3003 # There is already another app running on 3000.
+
+# Credentials for your image host.
+registry:
+  # Specify the registry server, if you're not using Docker Hub
+  # server: registry.digitalocean.com / ghcr.io / ...
+  username: richwhale
+  # Always use an access token rather than real password (pulled from .kamal/secrets).
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+# Configure builder setup.
+builder:
+  # By default, Kamal will only deploy committed changes. During development,
+  # you may want to uncomment this line to deploy uncommitted changes as well.
+  #  context: .
+  arch: arm64 # FIXME: Match your server's architecture.
+
+# Inject ENV variables into containers (secrets come from .kamal/secrets).
+env:
+  secret:
+    - RAILS_MASTER_KEY
+    - POSTMARK_FOR_API_TOKEN
+    - FUNNELS_ON_RAILS_DATABASE_PASSWORD
+    - REDIS_PASSWORD
+    - POSTGRES_PASSWORD
+  clear:
+    DB_HOST: social_games-db # Unusual naming because there is already another kamal setup running on the server.
+    POSTGRES_USER: social_games # Unusual naming because there is already another kamal setup running on the server.
+    POSTGRES_DB: funnels_on_rails_production
+    DB_PORT: 5432
+    REDIS_HOST: social_games-redis # Unusual naming because there is already another kamal setup running on the server.
+    REDIS_PORT: 6379
+    HIDE_THINGS: "false"
+    KAMAL_SETUP: "true"
+    # If you have a small server you might want to scale your app down:
+    # RAILS_MAX_THREADS: 3
+    # WEB_CONCURRENCY: 0 # or 2+ (https://judoscale.com/blog/opinionated-guide-to-configuring-rails-on-heroku)
+
+# So you can jump into your prod console with `kamal console`.
+aliases:
+  shell: app exec --interactive --reuse "bash"
+  console: app exec --interactive --reuse "bin/rails console"
+  logs: app logs -f
+  dbc: app exec --interactive --reuse "bin/rails dbconsole"
+  db_shell: accessory exec db --interactive --reuse "bash"
+  redis_shell: accessory exec redis --interactive --reuse "bash"
