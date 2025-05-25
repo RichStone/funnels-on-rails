@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
   namespace :webhooks do
     namespace :incoming do
-      resources :click_funnels_webhooks
+      resources :click_funnels_webhooks, only: [:create]
       namespace :oauth do
         # 🚅 super scaffolding will insert new oauth provider webhooks above this line.
       end

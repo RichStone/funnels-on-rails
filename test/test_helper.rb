@@ -12,6 +12,7 @@ end
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "mocha/minitest"
 
 # Set the default language we test in to English.
 I18n.default_locale = :en

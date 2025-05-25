@@ -16,6 +16,11 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
@@ -88,5 +93,14 @@ dump.rdb
 
 # Ignore output from rails-erd
 erd.pdf
+
+# Ignore .env files
+.env
+.env.local
+.env.development
+.env.production
+
+# Bun lockfile
+bun.lockb
 
 # 🚅 add your files to ignore here.

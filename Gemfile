@@ -72,6 +72,9 @@ group :development, :test do
   # In CI we use parallel tests to help increase test speed while keeping the number of
   # test runners down. You can tweak the workflow to adjust your parallelism as needed.
   gem "parallel_tests"
+  
+  # Load environment variables from .env files
+  gem "dotenv-rails"
 end
 
 group :development do
@@ -195,6 +198,9 @@ group :test do
 
   # Write system tests by pointing and clicking in your browser.
   gem "magic_test"
+
+  # Mocking and stubbing library
+  gem "mocha"
 
   # Increase parallelism to run CI tests across multiple nodes
   # Note: You need to ensure that ENV["KNAPSACK_PRO_CI_NODE_INDEX"] is set if you want to use this.

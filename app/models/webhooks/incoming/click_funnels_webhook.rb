@@ -2,13 +2,12 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
   include Webhooks::Incoming::Webhook
   include Rails.application.routes.url_helpers
 
-  # You can implement your authenticity verification logic in either
-  # the newly scaffolded model or controller for your incoming webhooks.
   def verify_authenticity
+    # We currently only verify authenticity in the controller.
     true
   end
 
   def process
-    puts "TBD!"
+    puts "TBD CF process behavior!"
   end
 end
