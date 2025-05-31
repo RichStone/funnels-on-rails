@@ -7,6 +7,7 @@ import ScrollReveal from 'stimulus-scroll-reveal'
 import RevealController from 'stimulus-reveal'
 import CableReady from 'cable_ready'
 import consumer from '../channels/consumer'
+import RubyUi__CarouselController from "./ruby_ui/carousel_controller"
 
 const application = Application.start()
 
@@ -23,6 +24,7 @@ import { context as controllersContext } from './**/*_controller.js';
 
 application.register('reveal', RevealController)
 application.register('scroll-reveal', ScrollReveal)
+application.register("ruby-ui--carousel", RubyUi__CarouselController)
 
 let controllers = Object.keys(controllersContext).map((filename) => ({
   identifier: identifierForContextKey(filename),
