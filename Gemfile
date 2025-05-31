@@ -271,3 +271,9 @@ gem "active_hash"
 # that you run into a merge conflict in the future.
 
 # 🚅 super scaffolding will insert new oauth providers above this line.
+
+gem "ruby_ui", "~> 1.0", :group => :development, :require => false
+
+gem "phlex-rails", "~> 2.3"
+
+gem "tailwind_merge", "~> 1.2"

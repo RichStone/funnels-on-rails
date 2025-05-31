@@ -2,8 +2,32 @@
   <% p.content_for :title, t('.header', teams_possessive: possessive_string(@team.name)) %>
 
   <% p.content_for :body do %>
-    <%# 🚅 super scaffolding will insert new children above this line. %>
+    <% if @random_tip.present? %>
+      <div class="mb-4 p-4 bg-blue-50 rounded-lg">
+        <h3 class="font-medium text-blue-800">Developer Marketing Tip:</h3>
+        <p class="mt-2 text-black"><%= @random_tip %></p>
+      </div>
+    <% end %>
     
-    <%= render 'account/scaffolding/absolutely_abstract/creative_concepts/index', creative_concepts: @team.scaffolding_absolutely_abstract_creative_concepts, hide_back: true unless scaffolding_things_disabled? %>
+    <% if @random_reason.present? %>
+
+      <%= image_tag('dev-marketing-tips/funnelsonrails-wide.png') %>
+      <%=
+
+            render RubyUI::Card.new(class: 'w-96 overflow-hidden') do
+                  render RubyUI::AspectRatio.new(aspect_ratio: "16/9", class: "border-b") do
+                        image_tag('dev-marketing-tips/funnelsonrails-wide.png')
+                  end
+                  render RubyUI::CardHeader.new do
+                        render RubyUI::CardTitle.new { 'Introducing RubyUI' }
+                        render RubyUI::CardDescription.new { "Kickstart your project today!" }
+                  end
+                  render RubyUI::CardFooter.new(class: 'flex justify-end') do
+                        render RubyUI::Button.new(variant: :outline) { "Get started" }
+                  end
+            end
+
+      %>
+    <% end %>
   <% end %>
 <% end %>

@@ -2554,6 +2554,7 @@ __metadata:
     stimulus-scroll-reveal: "npm:^3.2.0"
     tailwindcss: "npm:^3.4.17"
     trix: "npm:^2.1.12"
+    tw-animate-css: "npm:^1.3.2"
     yalc: "npm:^1.0.0-pre.53"
   languageName: unknown
   linkType: soft
@@ -5874,6 +5875,13 @@ __metadata:
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 10c0/e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
+  languageName: node
+  linkType: hard
+
+"tw-animate-css@npm:^1.3.2":
+  version: 1.3.2
+  resolution: "tw-animate-css@npm:1.3.2"
+  checksum: 10c0/0cdac9936f1f8e9889118212d12d5aa1a29ef08bebc14906e6cbc4c46eae3bdd0aaba26f3a148a41b007da08380ed127db39d713a19b6d84ce5b7be170f238b0
   languageName: node
   linkType: hard
 
