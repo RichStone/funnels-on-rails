@@ -38,5 +38,22 @@ class Views::Account::Teams::Show < Views::Base
         RubyUI::Button(variant: :outline) { "Get started" }
       end
     end
+
+    div(class: "w-full") do
+      render RubyUI::Accordion.new do
+        render RubyUI::AccordionItem.new do
+          render RubyUI::AccordionTrigger.new do
+            p(class: "font-medium") { "Can I use it with Rails?" }
+            RubyUI::AccordionIcon()
+          end
+
+          render RubyUI::AccordionContent.new do
+            p(class: "text-sm pb-4") do
+              "Yes, PhlexUI is pure Ruby and works great with Rails. It's a Ruby gem that you can install into your Rails app."
+            end
+          end
+        end
+      end
+    end
   end
 end

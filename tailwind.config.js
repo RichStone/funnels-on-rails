@@ -10,6 +10,11 @@ if (!process.env.THEME) {
 const themeConfigFile = execSync(`bundle exec bin/theme tailwind-config ${process.env.THEME}`).toString().trim()
 let themeConfig = require(themeConfigFile)
 
+// Add Tailwind CSS 4 future flags
+themeConfig.future = {
+  // Enable any future flags you want here
+};
+
 // *** Uncomment these if required for your overrides ***
 
 // const defaultTheme = require('tailwindcss/defaultTheme')
