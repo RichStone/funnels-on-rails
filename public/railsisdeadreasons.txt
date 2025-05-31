@@ -1,0 +1,16 @@
+Rails is dead because it survives the daily popping up new JavaScript framework for 21+ years now.
+Rails is dead because the biggest ecommerce platforms like Shopify and ClickFunnels still run on a Rails monolith.
+Rails is dead because GitHub is totally not running on Rails and definitely didn't handle billions of requests per day on it.
+Rails is dead because Twitter thought that moving away from Rails would magically fix their scaling issues.
+Rails is dead because 37Signals, the company that created Rails, clearly abandoned it and isn't still building all their businesses on it after two decades.
+Rails is dead because Netflix, Hulu, and Airbnb obviously don't use Rails for any of their core services that handle millions of users.
+Rails is dead because the Ruby on Rails repository on GitHub only has 55,000+ stars and definitely isn't one of the most popular web frameworks ever created.
+Rails is dead because major companies like Stripe, Square, and Kickstarter totally didn't build their payment processing and financial platforms on Rails.
+Rails is dead because the "Rails is dead" articles have only been published every year since 2008, clearly showing how deceased it really is.
+Rails is dead because DHH (Rails creator) keeps giving keynotes at conferences about this "dead" framework that somehow still powers a significant portion of the modern web.
+Ruby is dead because https://isrubydead.com/ is lying.
+Rails is dead because https://israilsdead.com/ is clearly lying.
+Ruby and Rails are dead because there are no Ruby meetups anymore anywhere in the world and there definitely weren't XXX meetups and XX conferences hosted in 2024.
+Rails is dead because the Rails Foundation has no ground and funding of XXX millions.
+Ruby and Rails is dead because no one ever writes articles about it.
+Coding is dead because vibe coding is here.

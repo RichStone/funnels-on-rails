@@ -1,9 +1,57 @@
-<%= render 'account/shared/page' do |p| %>
-  <% p.content_for :title, t('.header', teams_possessive: possessive_string(@team.name)) %>
-
-  <% p.content_for :body do %>
-    <%# 🚅 super scaffolding will insert new children above this line. %>
-    
-    <%= render 'account/scaffolding/absolutely_abstract/creative_concepts/index', creative_concepts: @team.scaffolding_absolutely_abstract_creative_concepts, hide_back: true unless scaffolding_things_disabled? %>
+<div class="mx-auto max-w-[600px]">
+  <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">
+    Hey yo, welcome to Funnels on Rails!
+  </h2>
+  <% if @random_tip.present? %>
+    <div class="mb-4 p-4 dark:bg-blue-50 bg-gray-50 rounded-lg">
+      <h3 class="font-medium text-blue-800">Today's Developer Marketing Tip:</h3>
+      <p class="mt-2 text-black"><%= @random_tip %></p>
+    </div>
   <% end %>
-<% end %>
+
+  <% if @random_reason.present? %>
+    <div class="mb-4 p-4 dark:bg-amber-50 bg-gray-50 rounded-lg">
+      <h3 class="font-medium text-amber-800">
+        Today's reason to stop using Rails before it's too late:
+      </h3>
+      <p class="mt-2 text-black"><%= @random_reason %></p>
+      <br>
+      <%= image_tag("stop-using-rails-reasons/funnelsonrails-wide.png", class: "w-full") %>
+    </div>
+  <% end %>
+  <p class="mb-6 text-black dark:text-gray-300 leading-relaxed">
+    It's a sample app running on Rails and Bullet Train, the best open source
+    SaaS framework on top of Rails. The idea is to showcase how you would
+    develop your SaaS with marketing in mind from day one, by having users sign
+    up and potentially upgrading to a paid subscription through a real marketing
+    platform funnel. Moreover, the app shows you how you can stop thinking about
+    subscription management, in-app product creation and so much more. You can
+    delegate all that to a platform that figured it all out long ago and has
+    the best ecommerce experience you could ever build on your own.
+  </p>
+  <p class="mb-6 text-black dark:text-gray-300">
+    The accompanying tutorial to this app is a real world funnel with all bells
+    and whistles, check it out at
+    <%= link_to "funnelsonrails.com", "https://www.funnelsonrails.com", class: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline", target: "_blank", rel: "noopener" %>
+  </p>
+  <p class="mb-6 text-black dark:text-gray-300">
+    This sample app is open source, you can check out the code and see how you
+    can start building yourself
+    <%= link_to "on GitHub", "https://github.com/RichStone/funnels-on-rails", class: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline", target: "_blank", rel: "noopener" %>
+  </p>
+  <p class="mb-6 text-black dark:text-gray-300">
+    This sample app is open source, you can check out the code and see how you
+    can start building yourself
+    <%= link_to "on GitHub", "https://github.com/RichStone/funnels-on-rails", class: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline", target: "_blank", rel: "noopener" %>
+  </p>
+  <p class="mb-6 text-black dark:text-gray-300">
+    If you have any questions, don't hesitate to reach out to
+    <%= link_to "Rich Steinmetz", "https://richstone.io/meet-rich", class: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline", target: "_blank", rel: "noopener" %>
+  </p>
+  <p class="text-black dark:text-gray-300 mb-6">
+    Other than that, feel free to explore the sample app's UI and Bullet Train's
+    default capabilities! Though, the grand value of this app at the moment are
+    the randomly changing dev marketing tips and Rails is dead reasons above.
+    Come back later to see if more stuff was added here!
+  </p>
+</div>
