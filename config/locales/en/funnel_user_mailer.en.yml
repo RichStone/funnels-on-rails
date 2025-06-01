@@ -1,0 +1,32 @@
+en:
+  funnel_user_mailer:
+    signature: &SIGNATURE
+      html:
+        <p>If you have any questions, please don't hesitate to <a href="mailto:%{support_email}">send us an email</a>.</p>
+        <p>Thanks,<br>The Funnels On Rails Team</p>
+      text: |
+        If you have any questions, please don't hesitate to email us at %{support_email}.
+        
+        Thanks,
+        The Funnels On Rails Team
+    welcome:
+      subject: Welcome to Funnels On Rails!
+      preview: Thanks for signing up through %{funnel_name}. This email contains details on how to get started using your account.
+      heading: Welcome to Funnels On Rails!
+      body:
+        html:
+          <p>Hey %{first_name},</p>
+          <p>Thanks for signing up through %{funnel_name}! We're excited to have you on board.</p>
+          <p>Your account has been created and you're ready to start using all the amazing features of Funnels On Rails.</p>
+        text: |
+          Hi %{first_name},
+          
+          Thanks for signing up through %{funnel_name}! We're excited to have you on board.
+          
+          Your account has been created and you're ready to start using all the amazing features of Funnels On Rails.
+      cta:
+        heading: What's next?
+        body: First you will need to set a password.
+        label: Set your password
+      signature:
+        <<: *SIGNATURE
