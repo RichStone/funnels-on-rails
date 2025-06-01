@@ -55,7 +55,7 @@ end
 # We add it last because doing so make the visible test output a little cleaner.
 reporters.push Minitest::Reporters::JUnitReporter.new if ENV["CI"]
 
-unless ENV['RM_INFO']
+unless ENV["RM_INFO"]
   Minitest::Reporters.use! reporters
 end
 

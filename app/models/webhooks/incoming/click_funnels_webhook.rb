@@ -11,7 +11,7 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
     existing_user = User.find_by(email: data.dig("data", "email_address"))
 
     if existing_user
-      return {
+      {
         success: true,
         user_id: existing_user.id,
         message: "User already exists"
@@ -31,14 +31,14 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
         user.create_default_team
         FunnelUserMailer.welcome(user, data.dig("funnel", "name")).deliver_later
 
-        return {
+        {
           success: true,
           user_id: user.id,
           message: "User created successfully"
         }
       else
-        Rails.logger.error("Failed to create user from webhook: #{user.errors.full_messages.join(', ')}")
-        return {
+        Rails.logger.error("Failed to create user from webhook: #{user.errors.full_messages.join(", ")}")
+        {
           success: false,
           errors: user.errors.full_messages
         }
@@ -46,7 +46,7 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
     end
   rescue => e
     Rails.logger.error("Error processing webhook: #{e.message}\n#{e.backtrace.join("\n")}")
-    return {
+    {
       success: false,
       message: "Error processing webhook: #{e.message}"
     }

@@ -10,14 +10,14 @@ class Webhooks::Incoming::ClickFunnelsWebhookTest < ActiveSupport::TestCase
     @webhook_data["data"]["email_address"] = "#{SecureRandom.hex}@example.com"
     @webhook = Webhooks::Incoming::ClickFunnelsWebhook.create!(data: @webhook_data)
   end
-  
+
   test "creates a new user from webhook data" do
     assert_difference "User.count" do
       @webhook.process
     end
-    
+
     new_user = User.find_by(email: @webhook_data["data"]["email_address"])
-    
+
     assert_not_nil new_user
     assert_equal @webhook_data["data"]["first_name"], new_user.first_name
     assert_equal @webhook_data["data"]["last_name"], new_user.last_name
@@ -25,7 +25,7 @@ class Webhooks::Incoming::ClickFunnelsWebhookTest < ActiveSupport::TestCase
 
     assert_enqueued_jobs 1
   end
-  
+
   test "doesn't create duplicate users" do
     password = SecureRandom.hex
     existing_user = User.create!(

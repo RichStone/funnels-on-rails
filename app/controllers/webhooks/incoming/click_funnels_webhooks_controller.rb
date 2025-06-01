@@ -1,21 +1,20 @@
 class Webhooks::Incoming::ClickFunnelsWebhooksController < Webhooks::Incoming::WebhooksController
   class UnverifiedDomainError < StandardError; end
+
   class InvalidSecretError < StandardError; end
 
   def create
-    begin
-      verify_source_ip
-      verify_endpoint_secret_param
+    verify_source_ip
+    verify_endpoint_secret_param
 
-      webhook = Webhooks::Incoming::ClickFunnelsWebhook.create(data: JSON.parse(request.raw_post))
-      webhook.process_async
-      render json: {status: "OK"}, status: :created
-    rescue UnverifiedDomainError, InvalidSecretError => e
-      # Usually we wouldn't expose that there is an endpoint at all, but this app is open source.
-      render json: {error: e.message}, status: :forbidden
-    rescue JSON::ParserError => e
-      render json: {error: "Invalid JSON payload"}, status: :bad_request
-    end
+    webhook = Webhooks::Incoming::ClickFunnelsWebhook.create(data: JSON.parse(request.raw_post))
+    webhook.process_async
+    render json: {status: "OK"}, status: :created
+  rescue UnverifiedDomainError, InvalidSecretError => e
+    # Usually we wouldn't expose that there is an endpoint at all, but this app is open source.
+    render json: {error: e.message}, status: :forbidden
+  rescue JSON::ParserError
+    render json: {error: "Invalid JSON payload"}, status: :bad_request
   end
 
   private
@@ -36,7 +35,7 @@ class Webhooks::Incoming::ClickFunnelsWebhooksController < Webhooks::Incoming::W
 
     true
   end
-  
+
   def verify_endpoint_secret_param
     expected_secret = ENV["CLICK_FUNNELS_ENDPOINT_SECRET"]
     provided_secret = params[:secret]
