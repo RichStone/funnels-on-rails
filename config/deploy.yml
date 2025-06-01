@@ -53,6 +53,8 @@ env:
     - FUNNELS_ON_RAILS_DATABASE_PASSWORD
     - REDIS_PASSWORD
     - POSTGRES_PASSWORD
+    - CLICK_FUNNELS_ENDPOINT_SECRET
+    - CLICK_FUNNELS_IP_ALLOWLIST
   clear:
     DB_HOST: social_games-db # Unusual naming because there is already another kamal setup running on the server.
     POSTGRES_USER: social_games # Unusual naming because there is already another kamal setup running on the server.
