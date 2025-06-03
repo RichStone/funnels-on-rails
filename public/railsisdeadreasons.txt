@@ -1,16 +1,32 @@
 Rails is dead because it survives the daily popping up new JavaScript framework for 21+ years now.
-Rails is dead because the biggest ecommerce platforms like Shopify and ClickFunnels still run on a Rails monolith.
+Rails is dead because the biggest enterpreneur platforms like Shopify and ClickFunnels still run on a Rails monolith.
 Rails is dead because GitHub is totally not running on Rails and definitely didn't handle billions of requests per day on it.
 Rails is dead because Twitter thought that moving away from Rails would magically fix their scaling issues.
 Rails is dead because 37Signals, the company that created Rails, clearly abandoned it and isn't still building all their businesses on it after two decades.
-Rails is dead because Netflix, Hulu, and Airbnb obviously don't use Rails for any of their core services that handle millions of users.
+Ruby and Rails are dead because Netflix, Hulu, and Airbnb obviously don't use them for any of their core services that handle millions of concurrent users.
 Rails is dead because the Ruby on Rails repository on GitHub only has 55,000+ stars and definitely isn't one of the most popular web frameworks ever created.
-Rails is dead because major companies like Stripe, Square, and Kickstarter totally didn't build their payment processing and financial platforms on Rails.
+Ruby is dead because major companies like Stripe, Square, and Kickstarter have never thought of using Ruby for their core services.
+Rails died when 37Signals was renamed to Basecamp. Frankly, everyone died that day.
 Rails is dead because the "Rails is dead" articles have only been published every year since 2008, clearly showing how deceased it really is.
 Rails is dead because DHH (Rails creator) keeps giving keynotes at conferences about this "dead" framework that somehow still powers a significant portion of the modern web.
+Ruby and Rails are dead because the community is clearly not thriving with thousands of active contributors and maintainers.
+Rails is dead because the RubyGems repository has no new gems being published every day.
 Ruby is dead because https://isrubydead.com/ is lying.
 Rails is dead because https://israilsdead.com/ is clearly lying.
-Ruby and Rails are dead because there are no Ruby meetups anymore anywhere in the world and there definitely weren't XXX meetups and XX conferences hosted in 2024.
-Rails is dead because the Rails Foundation has no ground and funding of XXX millions.
+Rails is dead because the community has no new books, tutorials, or courses being released every month.
+Rails is dead because the community has no new podcasts, YouTube channels, or Twitch streams being created every week.
+Rails is dead because startups stopped using it entirely.
+Rails is dead because there is no indie hacker community around it anymore (ask the Indie Rails podcast that died long ago).
+Rails is dead because Jason Swett abandoned it (he even renamed his podcast to the Code with Jason podcast - OK, this one is a true story).
+Ruby died when Matz stopped working on it (MINNSWANN).
+Ruby and Rails are dead because we started hosting meetups worldwide and there were no 639 registered meetups in 127 locations and 38 conferences in 34 locations (https://speakerdeck.com/irinanazarova/startups-on-rails-2025-sin-city-ruby?slide=195). Never happened.
+Rails is dead because the Rails Foundation has no ground and no funding (https://rubyonrails.org/foundation#:~:text=in%20the%20US.-,Our%20Budget,-.).
+Rails is dead because DHH said he is moving off Rails to the Unison language in 2026.
 Ruby and Rails is dead because no one ever writes articles about it.
-Coding is dead because vibe coding is here.
+Coding was declared dead because vibe coding is here (you know it's a true story if you have been to Sin City Ruby 2025).
+Rails is dead because no one ever got funded in 2024-2025 starting up on Rails (https://speakerdeck.com/irinanazarova/startups-on-rails-2025-sin-city-ruby?slide=106).
+Rails is dead because Evil Martians are pushing React back into it (inertia.js). This is where Rails died.
+Ruby died another death (remotely, from its home office) and turned in its grave when Jason Charnes left the Remote Ruby podcast in 2025. RIP Ruby.
+Ruby is dead, and Rails is also dead - it's a fact.
+OK this one is true: We don't have enough Ruby nor Rails juniors coming in. You know what happens with technologies that don't have enough juniors coming in? They die.
+2025 marks the last year of Rails Conf, that was slowly diying long ago. No conference, no Rails.
