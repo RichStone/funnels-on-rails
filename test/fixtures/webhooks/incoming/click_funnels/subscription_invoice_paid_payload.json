@@ -1,11 +1,4 @@
 {
-  "id": 2,
-  "public_id": "AdeHsX",
-  "workspace_id": 42000,
-  "uuid": "50b2c2631694e16e16d9e6b40ee066c0",
-  "event_type_id": "subscription.invoice.paid",
-  "subject_id": 366,
-  "subject_type": "Orders::Invoice",
   "data": {
     "id": 5750950,
     "public_id": "EYXXEz",
@@ -202,16 +195,21 @@
       "last_visit_with_utm": null
     }
   },
-  "api_version": 2,
-  "created_at": "2025-04-09T08:33:48.553Z",
   "page": {
-    "id": 74,
-    "public_id": "LnCjrR",
-    "name": "Great Page"
+    "id": 19448806,
+    "name": "Copy of Optin -- 1b4c9",
+    "public_id": "PLxnGE"
   },
   "funnel": {
-    "id": 12,
-    "public_id": "GVklHe",
-    "name": "Example Funnel"
-  }
+    "id": 753114,
+    "name": "Local Testing Funnels on Rails Funnel",
+    "public_id": "jgPKGv"
+  },
+  "event_id": "86dd8628-03b8-41b0-a382-8b3a31d6e525",
+  "created_at": "2025-06-03T03:38:34.042Z",
+  "event_type": "subscription.invoice.paid",
+  "subject_id": 592504162,
+  "api_version": 2,
+  "subject_type": "Orders::Invoice",
+  "workspace_id": 365069
 }

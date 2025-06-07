@@ -113,7 +113,7 @@ class Webhooks::Incoming::ClickFunnelsWebhooksControllerTest < ActionDispatch::I
 
     # Verify the webhook was created
     webhook = Webhooks::Incoming::ClickFunnelsWebhook.last
-    assert_equal webhook.data["event_type_id"], "subscription.invoice.paid"
+    assert_equal "subscription.invoice.paid", webhook.data["event_type"]
 
     # Process the webhook (normally done asynchronously)
     webhook.process

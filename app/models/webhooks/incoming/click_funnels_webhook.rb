@@ -8,7 +8,7 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
   end
 
   def process
-    event_type = data.dig("event_type_id")
+    event_type = data.dig("event_type")
 
     case event_type
     when "form_submission.created"
