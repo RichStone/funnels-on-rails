@@ -8,7 +8,33 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
   end
 
   def process
-    existing_user = User.find_by(email: data.dig("data", "email_address"))
+    event_type = data.dig("event_type_id")
+
+    case event_type
+    when "form_submission.created"
+      process_form_submission
+    when "subscription.invoice.paid"
+      process_subscription_invoice_paid
+    else
+      # Nothing to do here.
+      {
+        success: false,
+        message: "Unsupported event type: #{event_type}"
+      }
+    end
+  rescue => e
+    Rails.logger.error("Error processing webhook: #{e.message}\n#{e.backtrace.join("\n")}")
+    {
+      success: false,
+      message: "Error processing webhook: #{e.message}"
+    }
+  end
+
+  private
+
+  def process_form_submission
+    email_address = data.dig("data", "data", "contact", "email")
+    existing_user = User.find_by(email: email_address)
 
     if existing_user
       {
@@ -20,11 +46,11 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
       password = SecureRandom.hex
 
       user = User.new(
-        email: data.dig("data", "email_address"),
+        email: email_address,
         password: password,
         password_confirmation: password,
-        first_name: data.dig("data", "first_name"),
-        last_name: data.dig("data", "last_name")
+        first_name: data.dig("data", "data", "first_name"),
+        last_name: data.dig("data", "data", "last_name")
       )
 
       if user.save
@@ -44,11 +70,13 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
         }
       end
     end
-  rescue => e
-    Rails.logger.error("Error processing webhook: #{e.message}\n#{e.backtrace.join("\n")}")
+  end
+
+  def process_subscription_invoice_paid
+    # This will be implemented later
     {
-      success: false,
-      message: "Error processing webhook: #{e.message}"
+      success: true,
+      message: "Subscription invoice paid event received"
     }
   end
 end
