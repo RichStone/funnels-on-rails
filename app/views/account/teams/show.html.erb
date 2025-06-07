@@ -2,6 +2,17 @@
   <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">
     Hey yo, welcome to Funnels on Rails!
   </h2>
+  <% if current_user.subscription_status == User::SUBSCRIPTION_STATUSES[:premium] %>
+    <div class="mb-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+      <h3 class="font-medium text-yellow-800">This is your Premium badge ⭐️</h3>
+      <p class="mt-2 text-black">
+        Shoot Rich an email to chat about your most important question in the 1-on-1 consultation if you haven't done it yet:
+        <a href="mailto:hey@richsteinmetz.com" class="text-blue-600 hover:text-blue-800">hey@richsteinmetz.com</a> ✉️ 
+        Thanks for your trust! And please cancel your subscription! 😃 You can do so in
+        <a href="https://www.funnelsonrails.com/contacts/sign_in" class="text-blue-600 hover:text-blue-800" target="_blank" rel="noopener">the Funnels on Rails Customer Center</a>.
+      </p>
+    </div>
+  <% end %>
   <% if @random_tip.present? %>
     <div class="mb-4 p-4 dark:bg-blue-50 bg-gray-50 rounded-lg">
       <h3 class="font-medium text-blue-800">Today's Developer Marketing Tip:</h3>

@@ -73,10 +73,30 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
   end
 
   def process_subscription_invoice_paid
-    # This will be implemented later
+    email_address = data.dig("data", "order", "contact", "email_address")
+
+    unless email_address.present?
+      return {
+        success: false,
+        message: "Email address not found in webhook payload"
+      }
+    end
+
+    user = User.find_by(email: email_address)
+
+    unless user.present?
+      return {
+        success: false,
+        message: "User with email #{email_address} not found"
+      }
+    end
+
+    user.update(subscription_status: User::SUBSCRIPTION_STATUSES[:premium])
+
     {
       success: true,
-      message: "Subscription invoice paid event received"
+      user_id: user.id,
+      message: "User subscription status updated to premium"
     }
   end
 end

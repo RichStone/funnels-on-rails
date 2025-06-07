@@ -8,7 +8,7 @@ class Webhooks::Incoming::ClickFunnelsWebhookTest < ActiveSupport::TestCase
     ActionMailer::Base.deliveries.clear
   end
 
-  test "creates a new user from form submission webhook data" do
+  test "form_submission.created creates a new user from form submission webhook data" do
     # Setup form submission webhook data
     form_submission_data = JSON.parse(File.read(Rails.root.join("test/fixtures/webhooks/incoming/click_funnels/form_submission_payload.json")))
     form_submission_data["data"]["data"]["contact"]["email"] = "#{SecureRandom.hex}@example.com"
@@ -31,7 +31,7 @@ class Webhooks::Incoming::ClickFunnelsWebhookTest < ActiveSupport::TestCase
     assert_enqueued_jobs 1
   end
 
-  test "doesn't create duplicate users for form submission webhook" do
+  test "form_submission.created doesn't create duplicate users for form submission webhook" do
     # Setup form submission webhook data
     form_submission_data = JSON.parse(File.read(Rails.root.join("test/fixtures/webhooks/incoming/click_funnels/form_submission_payload.json")))
     form_submission_data["data"]["data"]["contact"]["email"] = "#{SecureRandom.hex}@example.com"
@@ -59,19 +59,41 @@ class Webhooks::Incoming::ClickFunnelsWebhookTest < ActiveSupport::TestCase
   end
 
   # Subscription invoice paid webhook test
-  test "handles subscription invoice paid webhook" do
+  test "subscription.invoice.paid event updates user subscription status" do
     # Setup subscription invoice paid webhook data
     subscription_invoice_data = JSON.parse(File.read(Rails.root.join("test/fixtures/webhooks/incoming/click_funnels/subscription_invoice_paid_payload.json")))
-    subscription_invoice_data["event_type_id"] = "subscription.invoice.paid"
+
+    # Create a user with the email from the payload
+    email = subscription_invoice_data["data"]["order"]["contact"]["email_address"]
+    password = SecureRandom.hex
+    user = User.create!(
+      email: email,
+      password: password,
+      password_confirmation: password,
+      first_name: "Test",
+      last_name: "User"
+    )
+
+    # Ensure user doesn't have premium status initially
+    assert_nil user.subscription_status
+
+    # Create and process the webhook
     subscription_invoice_webhook = Webhooks::Incoming::ClickFunnelsWebhook.create!(data: subscription_invoice_data)
 
     result = subscription_invoice_webhook.process
+
+    # Reload the user to get the updated attributes
+    user.reload
+
+    # Verify the result and user status
     assert_equal true, result[:success]
-    assert_equal "Subscription invoice paid event received", result[:message]
+    assert_equal user.id, result[:user_id]
+    assert_equal "User subscription status updated to premium", result[:message]
+    assert_equal User::SUBSCRIPTION_STATUSES[:premium], user.subscription_status
   end
 
   # Unsupported event type webhook test
-  test "handles unsupported event type webhook" do
+  test "unknown events responds with not-ok" do
     # Setup unsupported event type webhook data
     unsupported_event_data = JSON.parse(File.read(Rails.root.join("test/fixtures/webhooks/incoming/click_funnels/contact_identified_payload.json")))
     unsupported_event_data["event_type_id"] = "contact.identified"

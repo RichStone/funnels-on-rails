@@ -3,6 +3,11 @@ class User < ApplicationRecord
   include Roles::User
   # 🚅 add concerns above.
 
+  SUBSCRIPTION_STATUSES = {
+    regular: nil,
+    premium: "premium"
+  }.freeze
+
   # 🚅 add belongs_to associations above.
 
   # 🚅 add has_many associations above.
