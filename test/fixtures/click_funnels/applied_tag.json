@@ -1,0 +1,13 @@
+{
+  "id": 2,
+  "public_id": "NKGfcw",
+  "contact_id": 1,
+  "tag_id": 47,
+  "created_at": "2025-05-14T14:47:57.345Z",
+  "updated_at": "2025-05-14T14:47:57.345Z",
+  "tag": {
+    "public_id": "neoXZj",
+    "name": "Example Tag",
+    "color": "#29f42e"
+  }
+}

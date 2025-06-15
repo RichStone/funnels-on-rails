@@ -1,0 +1,33 @@
+{
+  "id": 43,
+  "public_id": "gxorbz",
+  "workspace_id": 42000,
+  "anonymous": null,
+  "email_address": "test-b77005c0d811f614f284@example.com",
+  "first_name": "Alonso",
+  "last_name": "Spencer",
+  "phone_number": "(385) 781-5510 x78740",
+  "time_zone": "Pacific Time (US & Canada)",
+  "uuid": "e3a0a063-6ce0-4064-a30d-c06feb26632b",
+  "unsubscribed_at": null,
+  "last_notification_email_sent_at": null,
+  "fb_url": "https://www.facebook.com/example",
+  "twitter_url": "https://twitter.com/example",
+  "instagram_url": null,
+  "linkedin_url": "https://www.linkedin.com/in/example",
+  "website_url": "https://example.com",
+  "created_at": "2025-04-21T14:47:57.276Z",
+  "updated_at": "2025-04-21T14:47:57.276Z",
+  "tags": [
+    {
+      "id": 45,
+      "public_id": "ILboOW",
+      "name": "Example Tag",
+      "color": "#3e9dec",
+      "applied_at": null
+    }
+  ],
+  "custom_attributes": {
+    "CustomKey": "MyText"
+  }
+}

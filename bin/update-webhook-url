@@ -1,0 +1,87 @@
+#!/usr/bin/env ruby
+
+require "net/http"
+require "json"
+require "dotenv"
+
+# Load .env file from project root
+Dotenv.load(File.join(File.dirname(__FILE__), "..", ".env"))
+
+# Debug environment variables
+subdomain = ENV["CLICK_FUNNELS_WORKSPACE_SUBDOMAIN"]
+workspace_id = ENV["CLICK_FUNNELS_WORKSPACE_ID"]
+api_key = ENV["CLICK_FUNNELS_API_KEY"]
+
+if subdomain.nil? || subdomain.empty?
+  puts "Error: CLICK_FUNNELS_WORKSPACE_SUBDOMAIN not found in environment"
+  exit 1
+end
+
+if workspace_id.nil? || workspace_id.empty?
+  puts "Error: CLICK_FUNNELS_WORKSPACE_ID not found in environment"
+  exit 1
+end
+
+if api_key.nil? || api_key.empty?
+  puts "Error: CLICK_FUNNELS_API_KEY not found in environment"
+  exit 1
+end
+
+# Wait for ngrok to start and get the URL
+puts "Waiting for ngrok to start..."
+sleep 3
+
+# Get ngrok URL from API
+begin
+  response = Net::HTTP.get(URI('http://127.0.0.1:4040/api/tunnels'))
+  tunnels = JSON.parse(response)
+  
+  https_tunnel = tunnels['tunnels'].find { |t| t['proto'] == 'https' }
+  if https_tunnel.nil?
+    puts "No HTTPS tunnel found!"
+    exit 1
+  end
+  
+  ngrok_url = https_tunnel['public_url']
+  if ngrok_url
+    puts "Found ngrok URL: #{ngrok_url}"
+  else
+    puts "No ngrok URL found!"
+    exit 1
+  end
+  
+  # Prepare webhook endpoint data
+  webhook_data = {
+    webhooks_outgoing_endpoint: {
+      url: "#{ngrok_url}/webhooks/incoming/click_funnels_webhooks?secret=#{ENV["CLICK_FUNNELS_ENDPOINT_SECRET"]}",
+    }
+  }
+
+  local_testing_endpoint_id = 69207
+  # Update ClickFunnels webhook
+  uri = URI("https://#{subdomain}.myclickfunnels.com/api/v2/webhooks/outgoing/endpoints/#{local_testing_endpoint_id}")
+  
+  puts "Updating webhook at: #{uri} with data: #{webhook_data.to_json}"
+
+  # TODO: The cf-ruby-sdk does not have Webhooks::Outgoing::Endpoint yet.
+  http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = true
+  
+  request = Net::HTTP::Patch.new(uri)
+  request["Authorization"] = "Bearer #{api_key}"
+  request["Content-Type"] = "application/json"
+  request.body = webhook_data.to_json
+  
+  response = http.request(request)
+  
+  if response.code == "201" || response.code == "200"
+    puts "✅ Successfully updated webhook URL to: #{ngrok_url}/webhooks/incoming/click_funnels_webhooks"
+  else
+    puts "❌ Failed to update webhook: #{response.code} - #{response.body}"
+    exit 1
+  end
+  
+rescue => e
+  puts "Error: #{e.message}"
+  exit 1
+end

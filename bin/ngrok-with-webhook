@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Start ngrok in background
+ngrok http 3003 &
+NGROK_PID=$!
+
+# Give ngrok time to start
+sleep 5
+
+# Update webhook URL
+bin/update-webhook-url
+
+# Keep ngrok running
+wait $NGROK_PID
