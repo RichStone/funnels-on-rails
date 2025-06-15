@@ -55,6 +55,9 @@ env:
     - POSTGRES_PASSWORD
     - CLICK_FUNNELS_ENDPOINT_SECRET
     - CLICK_FUNNELS_IP_ALLOWLIST
+    - CLICK_FUNNELS_WORKSPACE
+    - CLICK_FUNNELS_WORKSPACE_ID
+    - CLICK_FUNNELS_API_KEY
   clear:
     DB_HOST: social_games-db # Unusual naming because there is already another kamal setup running on the server.
     POSTGRES_USER: social_games # Unusual naming because there is already another kamal setup running on the server.
