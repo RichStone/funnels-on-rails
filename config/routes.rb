@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # Add /up route which is needed by Kamal.
-  get "/up", to: proc { [200, {}, ["OK"]] }
+  get "/up", to: "health#show"
 
   # See `config/routes/*.rb` to customize these configurations.
   draw "concerns"
