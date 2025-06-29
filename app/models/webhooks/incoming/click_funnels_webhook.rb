@@ -15,8 +15,9 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
       process_form_submission
     when "subscription.invoice.paid"
       process_subscription_invoice_paid
+    when "subscription.churned"
+      offboard_customer
     else
-      # Nothing to do here.
       {
         success: false,
         message: "Unsupported event type: #{event_type}"
@@ -97,6 +98,34 @@ class Webhooks::Incoming::ClickFunnelsWebhook < BulletTrain::Configuration.incom
       success: true,
       user_id: user.id,
       message: "User subscription status updated to premium"
+    }
+  end
+
+  def offboard_customer
+    email_address = data.dig("data", "contact", "email_address")
+
+    unless email_address.present?
+      return {
+        success: false,
+        message: "Email address not found in webhook payload"
+      }
+    end
+
+    user = User.find_by(email: email_address)
+
+    unless user.present?
+      return {
+        success: false,
+        message: "User with email #{email_address} not found"
+      }
+    end
+
+    user.offboard_customer
+
+    {
+      success: true,
+      user_id: user.id,
+      message: "User subscription status cleared due to churn"
     }
   end
 end

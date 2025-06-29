@@ -92,9 +92,84 @@ class Webhooks::Incoming::ClickFunnelsWebhookTest < ActiveSupport::TestCase
     assert_equal User::SUBSCRIPTION_STATUSES[:premium], user.subscription_status
   end
 
-  # Unsupported event type webhook test
+  test "subscription.churned event clears user subscription status" do
+    subscription_churned_data = JSON.parse(File.read(Rails.root.join("test/fixtures/clickfunnels/subscription_churned.json")))
+
+    email = subscription_churned_data.dig("data", "contact", "email_address")
+    password = SecureRandom.hex
+    user = User.create!(
+      email: email,
+      password: password,
+      password_confirmation: password,
+      first_name: "Test",
+      last_name: "User",
+      subscription_status: User::SUBSCRIPTION_STATUSES[:premium]
+    )
+
+    assert_equal User::SUBSCRIPTION_STATUSES[:premium], user.subscription_status
+
+    subscription_churned_webhook = Webhooks::Incoming::ClickFunnelsWebhook.create!(data: subscription_churned_data)
+
+    result = subscription_churned_webhook.process
+
+    user.reload
+
+    assert_equal true, result[:success]
+    assert_equal user.id, result[:user_id]
+    assert_equal "User subscription status cleared due to churn", result[:message]
+    assert_nil user.subscription_status
+  end
+
+  test "subscription.churned event handles missing email gracefully" do
+    subscription_churned_data = JSON.parse(File.read(Rails.root.join("test/fixtures/clickfunnels/subscription_churned.json")))
+    subscription_churned_data["data"].delete("contact")
+
+    subscription_churned_webhook = Webhooks::Incoming::ClickFunnelsWebhook.create!(data: subscription_churned_data)
+
+    result = subscription_churned_webhook.process
+
+    assert_equal false, result[:success]
+    assert_equal "Email address not found in webhook payload", result[:message]
+  end
+
+  test "subscription.churned event handles non-existent user gracefully" do
+    subscription_churned_data = JSON.parse(File.read(Rails.root.join("test/fixtures/clickfunnels/subscription_churned.json")))
+
+    subscription_churned_webhook = Webhooks::Incoming::ClickFunnelsWebhook.create!(data: subscription_churned_data)
+
+    result = subscription_churned_webhook.process
+
+    assert_equal false, result[:success]
+    assert_match(/User with email .* not found/, result[:message])
+  end
+
+  test "subscription.churned event is idempotent" do
+    subscription_churned_data = JSON.parse(File.read(Rails.root.join("test/fixtures/clickfunnels/subscription_churned.json")))
+
+    email = subscription_churned_data.dig("data", "contact", "email_address")
+    password = SecureRandom.hex
+    user = User.create!(
+      email: email,
+      password: password,
+      password_confirmation: password,
+      first_name: "Test",
+      last_name: "User",
+      subscription_status: nil
+    )
+
+    subscription_churned_webhook = Webhooks::Incoming::ClickFunnelsWebhook.create!(data: subscription_churned_data)
+
+    result1 = subscription_churned_webhook.process
+    assert_equal true, result1[:success]
+
+    result2 = subscription_churned_webhook.process
+    assert_equal true, result2[:success]
+
+    user.reload
+    assert_nil user.subscription_status
+  end
+
   test "unknown events responds with not-ok" do
-    # Setup unsupported event type webhook data
     unsupported_event_data = JSON.parse(File.read(Rails.root.join("test/fixtures/webhooks/incoming/click_funnels/contact_identified_payload.json")))
     unsupported_event_data["event_type_id"] = "contact.identified"
     unsupported_event_webhook = Webhooks::Incoming::ClickFunnelsWebhook.create!(data: unsupported_event_data)

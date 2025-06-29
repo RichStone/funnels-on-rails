@@ -4,11 +4,11 @@ class HealthController < ApplicationController
       database: check_database,
       redis: check_redis
     }
-    
+
     if checks.values.all?
-      render json: { status: "OK", checks: checks }, status: :ok
+      render json: {status: "OK", checks: checks}, status: :ok
     else
-      render json: { status: "FAIL", checks: checks }, status: :service_unavailable
+      render json: {status: "FAIL", checks: checks}, status: :service_unavailable
     end
   end
 

@@ -14,4 +14,22 @@ class UserTest < ActiveSupport::TestCase
     @user = FactoryBot.create :user, first_name: "a", last_name: nil
     assert_equal @user.details_provided?, false
   end
+
+  test "offboard_customer sets subscription_status to nil" do
+    @user = FactoryBot.create :user, subscription_status: User::SUBSCRIPTION_STATUSES[:premium]
+    assert_equal User::SUBSCRIPTION_STATUSES[:premium], @user.subscription_status
+
+    @user.offboard_customer
+
+    assert_nil @user.subscription_status
+  end
+
+  test "offboard_customer works when subscription_status is already nil" do
+    @user = FactoryBot.create :user, subscription_status: nil
+    assert_nil @user.subscription_status
+
+    @user.offboard_customer
+
+    assert_nil @user.subscription_status
+  end
 end

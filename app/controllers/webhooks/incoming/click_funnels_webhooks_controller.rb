@@ -7,7 +7,7 @@ class Webhooks::Incoming::ClickFunnelsWebhooksController < Webhooks::Incoming::W
     verify_source_ip
     verify_endpoint_secret_param
 
-    webhook = Webhooks::Incoming::ClickFunnelsWebhook.create(data: JSON.parse(request.raw_post))
+    webhook = Webhooks::Incoming::ClickFunnelsWebhook.create!(data: JSON.parse(request.raw_post))
     webhook.process_async
     render json: {status: "OK"}, status: :created
   rescue UnverifiedDomainError, InvalidSecretError => e

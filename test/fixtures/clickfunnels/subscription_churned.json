@@ -1,0 +1,212 @@
+{
+  "id": 2,
+  "public_id": "bWFHGq",
+  "workspace_id": 42000,
+  "event_id": "5325846aada245c26aac814d941fe8c3",
+  "event_type": "subscription.churned",
+  "subject_id": 352,
+  "subject_type": "Order",
+  "data": {
+    "id": 24,
+    "public_id": "BITXnp",
+    "order_number": "835500",
+    "workspace_id": 42000,
+    "contact_id": 111,
+    "live_mode": true,
+    "total_amount": "123.00",
+    "currency": "USD",
+    "origination_channel_id": 28,
+    "origination_channel_type": "User",
+    "shipping_address_first_name": "Madaline",
+    "shipping_address_last_name": "Smith",
+    "shipping_address_organization_name": "Testing, Inc.",
+    "shipping_address_phone_number": "+19053871234",
+    "shipping_address_street_one": "4940 Adams Views",
+    "shipping_address_street_two": "Suite 443",
+    "shipping_address_city": "New Kareen",
+    "shipping_address_region": "WA",
+    "shipping_address_country": "US",
+    "shipping_address_postal_code": "57963",
+    "billing_address_street_one": "73232 Jenkins Lights",
+    "billing_address_street_two": "Suite 875",
+    "billing_address_city": "Smithammouth",
+    "billing_address_region": "WA",
+    "billing_address_country": "US",
+    "billing_address_postal_code": "96487-9381",
+    "page_id": 36,
+    "notes": "Qui sed quaerat itaque.",
+    "in_trial": false,
+    "billing_status": "paid",
+    "service_status": "churned",
+    "order_type": "one-time-order",
+    "next_charge_at": null,
+    "tax_amount": "0.00",
+    "trial_end_at": null,
+    "billing_payment_method_id": null,
+    "funnel_name": null,
+    "tag_ids": [
+      35
+    ],
+    "discount_ids": [],
+    "activated_at": null,
+    "workspace_sharing_id": null,
+    "canceled_at": null,
+    "canceled_by": null,
+    "cancel_reason": null,
+    "cancel_description": null,
+    "churned_at": null,
+    "created_at": "2025-04-21T14:48:08.390Z",
+    "updated_at": "2025-04-21T14:48:08.390Z",
+    "external_id": null,
+    "payment_processor": "payments_ai",
+    "phone_number": "253.077.4554",
+    "page_name": "Great Page",
+    "origination_channel_name": "",
+    "order_page": {
+      "id": 36,
+      "public_id": "yhLVGv",
+      "name": "Great Page"
+    },
+    "contact": {
+      "id": 111,
+      "public_id": "rMAbDc",
+      "workspace_id": 42000,
+      "anonymous": null,
+      "email_address": "test-9e1bdec9c2ef5ea08326@example.com",
+      "first_name": "Carlo",
+      "last_name": "Romaguera",
+      "phone_number": "253.077.4554",
+      "time_zone": "Pacific Time (US & Canada)",
+      "uuid": "d3b9c594-658a-4526-8c56-d4f3406e9674",
+      "unsubscribed_at": null,
+      "last_notification_email_sent_at": null,
+      "fb_url": "https://www.facebook.com/example",
+      "twitter_url": "https://twitter.com/example",
+      "instagram_url": null,
+      "linkedin_url": "https://www.linkedin.com/in/example",
+      "website_url": "https://example.com",
+      "created_at": "2025-04-21T14:48:08.217Z",
+      "updated_at": "2025-04-21T14:48:08.217Z",
+      "tags": [
+        {
+          "id": 131,
+          "public_id": "tljOdC",
+          "name": "Example Tag",
+          "color": "#9af93f",
+          "applied_at": null
+        }
+      ],
+      "custom_attributes": {
+        "CustomKey": "MyText"
+      }
+    },
+    "contact_groups": [
+      {
+        "id": 24,
+        "public_id": "AFQVld",
+        "name": "Example Group"
+      }
+    ],
+    "workspace": {
+      "id": 42000,
+      "public_id": "xvDorV",
+      "team_id": 42000,
+      "name": "Example Workspace",
+      "subdomain": "example",
+      "created_at": "2025-04-21T14:48:08.206Z",
+      "updated_at": "2025-04-21T14:48:08.206Z"
+    },
+    "segments": [
+      {
+        "id": 24,
+        "public_id": "rEkQKH",
+        "name": "Example Segment"
+      }
+    ],
+    "line_items": [
+      {
+        "id": 24,
+        "public_id": "qNlVjE",
+        "order_id": 24,
+        "quantity": 5,
+        "prorated": null,
+        "created_at": "2024-12-06T06:49:54.268Z",
+        "updated_at": "2025-01-27T12:50:48.148Z",
+        "original_product": {
+          "id": 6505,
+          "public_id": "JWkEqJ",
+          "name": "My Subscription Newsletter"
+        },
+        "products_price": {
+          "id": 46,
+          "public_id": "EJRypN",
+          "amount": "39.99",
+          "currency": "usd",
+          "duration": null,
+          "interval": "months",
+          "interval_count": 1,
+          "key": null
+        },
+        "products_variant": {
+          "id": 22,
+          "public_id": "ONypYy",
+          "name": "My Subscription Newsletter",
+          "description": "A high-quality cotton t-shirt with a modern fit.",
+          "sku": "TSH12345"
+        }
+      },
+      {
+        "id": 25,
+        "public_id": "usleqV",
+        "order_id": 24,
+        "quantity": 1,
+        "prorated": null,
+        "created_at": null,
+        "updated_at": null,
+        "original_product": {
+          "id": 67,
+          "public_id": "WIdlka",
+          "name": "Fantastic Silk Clock 3683f7"
+        },
+        "products_price": {
+          "id": 41,
+          "public_id": "sqUyIf",
+          "amount": "100.00",
+          "currency": "USD",
+          "duration": null,
+          "interval": null,
+          "interval_count": null,
+          "key": null
+        },
+        "products_variant": {
+          "id": 42,
+          "public_id": "NhEJCe",
+          "name": "Enormous Granite Bottle variant 9fdb",
+          "description": "Hic at nesciunt asperiores.",
+          "sku": "bmziLv1AYnEoG6oy"
+        }
+      }
+    ],
+    "previous_line_item": null,
+    "affiliate": {
+      "name": "Josh Fancy",
+      "email": "test-488ef7b030362a1a7b98@example.com"
+    },
+    "referral_code": {
+      "code": "d473754c5567e94800c1d16ef4b3fb394b9cfe49f25c80f755226186c390740c",
+      "default": true
+    }
+  },
+  "api_version": 2,
+  "created_at": "2025-04-21T14:49:23.516Z",
+  "page": {
+    "id": 70,
+    "public_id": "dFjUhH",
+    "name": "Great Page"
+  },
+  "funnel": {
+    "id": 12,
+    "public_id": "VLuvwA",
+    "name": "Example Funnel"
+  }
+}

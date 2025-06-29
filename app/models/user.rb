@@ -24,5 +24,9 @@ class User < ApplicationRecord
 
   # 🚅 add delegations above.
 
+  def offboard_customer
+    update!(subscription_status: nil)
+  end
+
   # 🚅 add methods above.
 end

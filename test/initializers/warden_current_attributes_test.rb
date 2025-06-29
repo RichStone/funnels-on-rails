@@ -49,5 +49,4 @@ class WardenCurrentAttributesTest < ActiveSupport::TestCase
       simulate_after_authentication(user)
     end
   end
-
 end
