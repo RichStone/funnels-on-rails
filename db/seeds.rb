@@ -11,31 +11,42 @@ puts "Creating Builder Levels..."
 [
   {
     name: "Seeker",
-    description: "Someone trying to understand their place in the Rails space and maybe build a side project someday."
+    description: "Someone trying to understand their place in the Rails space and maybe build a side project someday.",
+    image: nil  # No image provided for Seeker
   },
   {
     name: "Blueprint Apprentice",
-    description: "Our Apprentices follow blueprints to validate their idea and get to a first version of their MVP."
+    description: "Our Apprentices follow blueprints to validate their idea and get to a first version of their MVP.",
+    image: "app/assets/images/builder_levels/blueprint-apprentice.png"
   },
   {
     name: "Journeyman",
-    description: "The Journeyman has first real users and testers using their product"
+    description: "The Journeyman has first real users and testers using their product and learning to get the next steps in the journey.",
+    image: "app/assets/images/builder_levels/journeyman.png"
   },
   {
     name: "Foreman",
-    description: "The Foreman makes some revenue with their product"
+    description: "The Foreman has revenue with their product and looking to scale.",
+    image: "app/assets/images/builder_levels/foreman.png"
   },
   {
     name: "Architect",
-    description: "A visionary running a successful Rails business."
+    description: "A visionary running a successful Rails business.",
+    image: "app/assets/images/builder_levels/architect.png"
   },
   {
     name: "Master Builder",
-    description: "The movers, trendsetters and biggest achievers of the industry."
+    description: "The movers, trendsetters and biggest achievers of the industry.",
+    image: "app/assets/images/builder_levels/master-builder.png"
   }
 ].each do |level_data|
-  BuilderLevel.find_or_create_by(name: level_data[:name]) do |level|
-    level.description = level_data[:description]
+  level = BuilderLevel.find_or_create_by(name: level_data[:name]) do |l|
+    l.description = level_data[:description]
+  end
+  
+  # Update image path if provided
+  if level_data[:image]
+    level.update(image: level_data[:image])
   end
 end
 puts "Created #{BuilderLevel.count} Builder Levels."
