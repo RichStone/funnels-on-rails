@@ -4,7 +4,7 @@ class Public::RailsBuildersController < ApplicationController
   def index
     @rails_builders = RailsBuilder.joins(:participations)
       .where(participations: {left_at: nil})
-      .includes(:builder_level, bio_image_attachment: :blob)
+      .includes(:builder_level, :participations, bio_image_attachment: :blob)
       .distinct
       .order(:first_name, :last_name)
   end
