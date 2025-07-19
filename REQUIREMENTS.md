@@ -28,7 +28,7 @@ image
 We should preseed the database with:
 name: "Seeker" - "Someone trying to understand their place in the Rails space and maybe build a side project someday."
 name: "Blueprint Apprentice" - "Our Apprentices follow blueprints to validate their idea and get to a first version of their MVP."
-name: "Journeyman" - "The Journeyman has first users for "
+name: "Journeyman" - "The Journeyman has first real users and testers using their product"
 name: "Foreman" - "The Foreman makes some revenue with their product"
 name: "Architect" - "A visionary running a successful Rails business."
 name: "Master Builder" - "The movers, trendsetters and biggest achievers of the industry."
