@@ -184,6 +184,7 @@ group :development do
   gem "derailed_benchmarks"
   # stackprof has some native components and it may be harder to compile locally, so we leave it as optional
   # gem "stackprof"
+  gem "claude-on-rails"
 end
 
 group :test do

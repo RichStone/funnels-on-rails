@@ -80,6 +80,9 @@ rails generate super_scaffold:field ModelName field:field_type
 # Available field types: text_field, trix_editor, buttons, super_select, image
 ```
 
+Use the docs to get detailed info about how to scaffold:
+https://bullettrain.co/docs/super-scaffolding
+
 Example:
 ```bash
 # Create a Project model under Team
@@ -145,5 +148,4 @@ rake db:migrate
 - SimpleCov for coverage reporting
 - Fixtures for external API responses (test/fixtures/clickfunnels/)
 
-### Current Development Focus
-The `mark-as-power-user-in-clickfunnels` branch implements functionality to mark users as "power users" in ClickFunnels. There's an active migration plan (PLAN.md) to move from the custom implementation to the official ClickFunnels SDK.
+/file:.claude-on-rails/context.md

@@ -104,3 +104,8 @@ erd.pdf
 bun.lockb
 
 # 🚅 add your files to ignore here.
+
+# ClaudeOnRails
+.claude-on-rails/sessions/
+.claude-swarm/
+claude-swarm.log
