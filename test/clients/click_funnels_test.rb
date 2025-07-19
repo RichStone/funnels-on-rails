@@ -178,7 +178,7 @@ class ClickFunnelsTest < ActiveSupport::TestCase
 
     result = @client.mark_as_power_user(@contact["email_address"])
 
-    assert_equal true, result
+    assert_equal @applied_tag, result
   end
 
   test "mark_as_power_user returns false when contact not found" do

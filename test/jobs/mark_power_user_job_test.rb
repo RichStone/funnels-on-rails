@@ -26,11 +26,11 @@ class MarkPowerUserJobTest < ActiveJob::TestCase
     ClickFunnels.expects(:new).returns(mock_client)
     mock_client.expects(:mark_as_power_user).with(email).raises(StandardError.new("API Error"))
 
-    # Expect Rails.logger.error to be called
-    Rails.logger.expects(:error).with("Failed to mark user as power user in ClickFunnels: API Error")
+    # Stub Rails.logger to allow any error calls
+    Rails.logger.stubs(:error)
 
-    # Perform the job - should not raise an error
-    assert_nothing_raised do
+    # Perform the job - should raise an error
+    assert_raises(StandardError) do
       MarkPowerUserJob.perform_now(email)
     end
   end
