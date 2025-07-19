@@ -1,0 +1,2 @@
+class BuilderLevel < ApplicationRecord
+end

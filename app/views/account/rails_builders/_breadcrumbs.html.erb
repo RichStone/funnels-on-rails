@@ -1,0 +1,8 @@
+<% rails_builder ||= @rails_builder %>
+<% team ||= @team || rails_builder&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, team, :rails_builders] %>
+<% if rails_builder&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: rails_builder.label_string, url: [:account, rails_builder] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'rails_builders' %>

@@ -6,6 +6,40 @@
 
 puts "🌱 Generating global seeds."
 
+# Seed Builder Levels
+puts "Creating Builder Levels..."
+[
+  {
+    name: "Seeker",
+    description: "Someone trying to understand their place in the Rails space and maybe build a side project someday."
+  },
+  {
+    name: "Blueprint Apprentice",
+    description: "Our Apprentices follow blueprints to validate their idea and get to a first version of their MVP."
+  },
+  {
+    name: "Journeyman",
+    description: "The Journeyman has first real users and testers using their product"
+  },
+  {
+    name: "Foreman",
+    description: "The Foreman makes some revenue with their product"
+  },
+  {
+    name: "Architect",
+    description: "A visionary running a successful Rails business."
+  },
+  {
+    name: "Master Builder",
+    description: "The movers, trendsetters and biggest achievers of the industry."
+  }
+].each do |level_data|
+  BuilderLevel.find_or_create_by(name: level_data[:name]) do |level|
+    level.description = level_data[:description]
+  end
+end
+puts "Created #{BuilderLevel.count} Builder Levels."
+
 # Check whether the Zapier app has been deployed.
 zapier_app_id = begin
   JSON.parse(File.read("zapier/.zapierapprc")).dig("id")

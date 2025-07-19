@@ -1,0 +1,22 @@
+<% cancel_path ||= rails_builder.persisted? ? [:account, rails_builder] : [:account, @team, :rails_builders] %>
+
+<%= form_with model: rails_builder, url: (rails_builder.persisted? ? [:account, rails_builder] : [:account, @team, :rails_builders]), class: 'form' do |form| %>
+  <%= render "shared/limits/form", form: form, cancel_path: cancel_path do %>
+    <%= render 'account/shared/forms/errors', form: form %>
+
+    <% with_field_settings form: form do %>
+      <%= render 'shared/fields/text_field', method: :first_name, options: {autofocus: true} %>
+      <%= render 'shared/fields/text_field', method: :last_name %>
+      <%= render 'shared/fields/text_field', method: :email %>
+      <%= render 'shared/fields/super_select', method: :builder_level_id, options: {}, html_options: {},
+        choices: @rails_builder.valid_builder_levels.map { |builder_level| [builder_level.label_string, builder_level.id] } %>
+      <%= render 'shared/fields/image', method: :bio_image %>
+      <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <% end %>
+
+    <div class="buttons">
+      <%= form.submit (form.object.persisted? ? t('.buttons.update') : t('.buttons.create')), class: "button" %>
+      <%= link_to t('global.buttons.cancel'), cancel_path, class: "button-secondary" %>
+    </div>
+  <% end %>
+<% end %>

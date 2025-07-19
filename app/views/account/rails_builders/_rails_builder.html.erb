@@ -1,0 +1,29 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :rails_builders %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% with_attribute_settings object: rails_builder do %>
+  <tr data-id="<%= rails_builder.id %>">
+    <%= render "shared/tables/checkbox", object: rails_builder %>
+    <td><%= render 'shared/attributes/text', attribute: :first_name, url: [:account, rails_builder] %></td>
+    <td><%= render 'shared/attributes/text', attribute: :last_name %></td>
+    <td><%= render 'shared/attributes/text', attribute: :email %></td>
+    <td><%= render 'shared/attributes/belongs_to', attribute: :builder_level %></td>
+    <td><%= render 'shared/attributes/image', attribute: :bio_image %></td>
+    <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+    <td class="buttons">
+      <% unless hide_actions %>
+        <% if can? :edit, rails_builder %>
+          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, rails_builder], class: 'button-secondary button-smaller' %>
+        <% end %>
+        <% if can? :destroy, rails_builder %>
+          <%= button_to t('.buttons.shorthand.destroy'), [:account, rails_builder], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(rails_builder)) }, class: 'button-secondary button-smaller' %>
+        <% end %>
+        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

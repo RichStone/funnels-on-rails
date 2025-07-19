@@ -1,0 +1,123 @@
+en:
+  rails_builders: &rails_builders
+    label: &label Rails Builders
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-puzzle-piece
+    buttons: &buttons
+      new: Add New Rails Builder
+      create: Create Rails Builder
+      edit: Edit Rails Builder
+      update: Update Rails Builder
+      destroy: Remove Rails Builder
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{rails_builder_name}? This will also remove any child resources and can't be undone.
+    rails_builder:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Rails Builder ID
+      team_id:
+        heading: Team ID
+      first_name:
+        _: &first_name First Name
+        label: *first_name
+        heading: *first_name
+        api_title: *first_name
+        api_description: *first_name
+      last_name:
+        _: &last_name Last Name
+        label: *last_name
+        heading: *last_name
+        api_title: *last_name
+        api_description: *last_name
+      email:
+        _: &email Email
+        label: *email
+        heading: *email
+        api_title: *email
+        api_description: *email
+      builder_level_id: &builder_level
+        _: &builder_level_id Builder Level
+        label: *builder_level_id
+        heading: *builder_level_id
+        api_title: *builder_level_id
+        api_description: *builder_level_id
+        placeholder: None
+      builder_level: *builder_level
+      bio_image:
+        _: &bio_image Bio Image
+        label: *bio_image
+        heading: *bio_image
+        api_title: *bio_image
+        api_description: *bio_image
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Rails Builders"
+      index: "List Rails Builders"
+      create: "Add a New Rails Builder"
+      member_actions: "Actions for an Individual Rails Builder"
+      show: "Retrieve a Rails Builder"
+      update: "Update a Rails Builder"
+      destroy: "Delete a Rails Builder"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Rails Builders"
+      contexts:
+        team:
+          header: Rails Builders
+          description: Below is a list of Rails Builders that have been added for %{team_name}.
+          description_empty: No Rails Builders have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{rails_builder_name}"
+      header: Rails Builder Details
+      description: Below are the details we have for %{rails_builder_name}.
+      manage_description: You'll also find options for updating these details or removing %{rails_builder_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Rails Builder for %{team_name}"
+      header: New Rails Builder Details
+      description: Please provide the details of the new Rails Builder you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{rails_builder_name}"
+      header: Edit Rails Builder Details
+      description: You can update the details or settings for %{rails_builder_name} below.
+      form: *form
+    notifications:
+      created: Rails Builder was successfully created.
+      updated: Rails Builder was successfully updated.
+      destroyed: Rails Builder was successfully destroyed.
+  account:
+    rails_builders: *rails_builders
+  activerecord:
+    attributes:
+      rails_builder:
+        first_name: *first_name
+        last_name: *last_name
+        email: *email
+        builder_level_id: *builder_level_id
+        bio_image: *bio_image
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

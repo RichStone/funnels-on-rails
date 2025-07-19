@@ -12,6 +12,18 @@ class Ability
       # permit is a Bullet Train created "magic" method. It parses all the roles in `config/roles.yml` and automatically inserts the appropriate `can` method calls here
       permit user, through: :memberships, parent: :team
 
+      # RailsBuilder permissions
+      user.memberships.each do |membership|
+        # Team members can manage RailsBuilder records with their own email
+        can :manage, RailsBuilder, team_id: membership.team_id, email: user.email
+
+        if membership.admin?
+          # Team admins can manage RailsBuilder records with email matching any team member
+          team_member_emails = membership.team.memberships.map(&:user).map(&:email)
+          can :manage, RailsBuilder, team_id: membership.team_id, email: team_member_emails
+        end
+      end
+
       # INDIVIDUAL USER PERMISSIONS.
       can :manage, User, id: user.id
       can :read, User, id: user.collaborating_user_ids

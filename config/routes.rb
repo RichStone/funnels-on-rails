@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     # The root `/` path is routed to `Public::HomeController#index` by default. You can set it
     # to whatever you want by doing something like this:
     # root to: "my_new_root_controller#index"
+
+    get "rails-builders-community", to: "rails_builders#index", as: :rails_builders_community
   end
 
   namespace :webhooks do
@@ -77,6 +79,8 @@ Rails.application.routes.draw do
         namespace :integrations do
           # 🚅 super scaffolding will insert new integration installations above this line.
         end
+
+        resources :rails_builders
       end
     end
   end
