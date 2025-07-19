@@ -17,27 +17,27 @@ puts "Creating Builder Levels..."
   {
     name: "Blueprint Apprentice",
     description: "Our Apprentices follow blueprints to validate their idea and get to a first version of their MVP.",
-    image: "app/assets/images/builder_levels/blueprint-apprentice.png"
+    image: "builder_levels/blueprint-apprentice.png"
   },
   {
     name: "Journeyman",
     description: "The Journeyman has first real users and testers using their product and learning to get the next steps in the journey.",
-    image: "app/assets/images/builder_levels/journeyman.png"
+    image: "builder_levels/journeyman.png"
   },
   {
     name: "Foreman",
     description: "The Foreman has revenue with their product and looking to scale.",
-    image: "app/assets/images/builder_levels/foreman.png"
+    image: "builder_levels/foreman.png"
   },
   {
     name: "Architect",
     description: "A visionary running a successful Rails business.",
-    image: "app/assets/images/builder_levels/architect.png"
+    image: "builder_levels/architect.png"
   },
   {
     name: "Master Builder",
     description: "The movers, trendsetters and biggest achievers of the industry.",
-    image: "app/assets/images/builder_levels/master-builder.png"
+    image: "builder_levels/master-builder.png"
   }
 ].each do |level_data|
   level = BuilderLevel.find_or_create_by(name: level_data[:name]) do |l|

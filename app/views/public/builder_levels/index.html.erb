@@ -1,0 +1,66 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">The Rails Builder Journey</h1>
+    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Every Rails developer follows a unique path. Here's how we recognize and celebrate each stage of the journey.
+    </p>
+  </div>
+
+  <div class="space-y-12">
+    <% @builder_levels.each_with_index do |level, index| %>
+      <div class="<%= index.even? ? 'lg:flex-row' : 'lg:flex-row-reverse' %> flex flex-col lg:flex gap-8 items-center">
+        <div class="lg:w-1/2">
+          <% if level.image.present? %>
+            <div class="relative">
+              <%= image_tag level.image, class: "w-full max-w-md mx-auto rounded-lg shadow-xl", alt: "#{level.name} badge" %>
+              <div class="absolute top-4 right-4 bg-white rounded-full px-4 py-2 shadow-lg">
+                <span class="text-2xl font-bold text-gray-800">Level <%= index + 1 %></span>
+              </div>
+            </div>
+          <% else %>
+            <div class="w-full max-w-md mx-auto h-64 bg-gray-200 rounded-lg shadow-xl flex items-center justify-center">
+              <div class="text-center">
+                <svg class="h-24 w-24 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-2xl font-bold text-gray-600">Level <%= index + 1 %></span>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        
+        <div class="lg:w-1/2 text-center lg:text-left">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4"><%= level.name %></h2>
+          <p class="text-lg text-gray-700 mb-6"><%= level.description %></p>
+          
+          <% # Show statistics for this level %>
+          <% active_count = RailsBuilder.joins(:participations).where(builder_level: level, participations: { left_at: nil }).distinct.count %>
+          <% if active_count > 0 %>
+            <div class="inline-flex items-center space-x-2 text-sm text-gray-600 bg-gray-100 rounded-full px-4 py-2">
+              <svg class="h-5 w-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+              <span><%= active_count %> active <%= 'builder'.pluralize(active_count) %> at this level</span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      
+      <% if index < @builder_levels.length - 1 %>
+        <div class="flex justify-center py-8">
+          <svg class="h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+          </svg>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  
+  <div class="mt-16 text-center">
+    <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-8 text-white">
+      <h3 class="text-2xl font-bold mb-4">Ready to Start Your Journey?</h3>
+      <p class="text-lg mb-6">Join our Rails Builders community and get the support you need at every level.</p>
+      <%= link_to "View Active Rails Builders", rails_builders_community_path, class: "inline-block bg-white text-blue-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-100 transition" %>
+    </div>
+  </div>
+</div>

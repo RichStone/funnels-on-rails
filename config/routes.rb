@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     # root to: "my_new_root_controller#index"
 
     get "rails-builders-community", to: "rails_builders#index", as: :rails_builders_community
+    get "builder-levels", to: "builder_levels#index", as: :builder_levels
   end
 
   namespace :webhooks do
