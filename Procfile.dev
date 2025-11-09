@@ -3,4 +3,4 @@ worker: bundle exec sidekiq -t 25
 js: THEME="light" yarn build --watch
 light-css: yarn light:build:css --watch
 light-mailer-css: yarn light:build:mailer:css --watch
-ngrok: bin/ngrok-with-webhook
+# ngrok: bin/ngrok-with-webhook
