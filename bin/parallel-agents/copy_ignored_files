@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "fileutils"
+
+# Copy .gitignore-matched files between directories
+# Usage: copy_ignored_files <source-dir> <dest-dir>
+
+source_dir = ARGV[0]
+dest_dir = ARGV[1]
+
+if source_dir.nil? || dest_dir.nil?
+  puts "Usage: #{$PROGRAM_NAME} <source-dir> <dest-dir>"
+  puts "Example: #{$PROGRAM_NAME} /path/to/project /path/to/worktree"
+  exit 1
+end
+
+unless Dir.exist?(source_dir)
+  puts "Error: Source directory does not exist: #{source_dir}"
+  exit 1
+end
+
+puts "Copying .gitignore-matched files from #{source_dir} to #{dest_dir}"
+
+Dir.chdir(source_dir) do
+  # Get list of all ignored files that exist
+  ignored_files = `git ls-files --ignored --exclude-standard --others --directory`.lines.map(&:strip)
+
+  ignored_files.each do |file|
+    # Skip directory markers (end with /)
+    next if file.end_with?("/")
+
+    # Skip if file doesn't exist
+    next unless File.exist?(file)
+
+    dest_file = File.join(dest_dir, file)
+    dest_file_dir = File.dirname(dest_file)
+
+    # Create destination directory if needed
+    FileUtils.mkdir_p(dest_file_dir)
+
+    if File.file?(file)
+      puts "Copying: #{file}"
+      FileUtils.cp(file, dest_file, preserve: true)
+    elsif File.directory?(file)
+      puts "Copying directory: #{file}"
+      FileUtils.cp_r(file, dest_file, preserve: true)
+    end
+  end
+end
+
+puts "Done copying ignored files!"

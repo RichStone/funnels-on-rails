@@ -1,0 +1,324 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "optparse"
+require "fileutils"
+
+# Configuration class to hold all settings
+class WorktreeConfig
+  attr_accessor :num_worktrees, :setup_type, :branch_name, :ultra_mode, :ab_test_mode, :prompt
+
+  def initialize
+    @num_worktrees = 1
+    @setup_type = "plan"
+    @branch_name = ""
+    @ultra_mode = false
+    @ab_test_mode = false
+    @prompt = "Hey Claude, what's new with the code here?"
+  end
+
+  def validate!
+    raise "Number of worktrees must be between 1 and 10" unless (1..10).cover?(num_worktrees)
+    raise "Setup type must be 'plan' or 'full'" unless %w[plan full].include?(setup_type)
+  end
+
+  def ab_test?
+    ab_test_mode
+  end
+
+  def ultra?
+    ultra_mode
+  end
+end
+
+# Main worktree manager class
+class WorktreeManager
+  attr_reader :config, :current_branch, :repo_dir, :parent_dir, :repo_name
+
+  def initialize(config)
+    @config = config
+    @current_branch = `git branch --show-current`.strip
+    @repo_dir = Dir.pwd
+    @parent_dir = File.dirname(@repo_dir)
+    @repo_name = File.basename(@repo_dir)
+  end
+
+  def run
+    validate_environment!
+
+    config.branch_name = current_branch if config.branch_name.empty?
+
+    # Override settings for A/B test mode
+    config.num_worktrees = 2 if config.ab_test?
+
+    puts "Creating #{config.num_worktrees} worktree(s) with setup type '#{config.setup_type}'..."
+    puts ""
+
+    created_worktrees = []
+
+    config.num_worktrees.times do |i|
+      worktree_info = create_worktree(i + 1)
+      created_worktrees << worktree_info
+      sleep 0.5
+    end
+
+    print_summary(created_worktrees)
+  end
+
+  private
+
+  def validate_environment!
+    # Check if we're in a git repository
+    unless system("git rev-parse --is-inside-work-tree > /dev/null 2>&1")
+      raise "Not in a git repository"
+    end
+
+    # Check if Ghostty is installed
+    unless system("command -v ghostty > /dev/null 2>&1")
+      raise "Ghostty not found in PATH"
+    end
+  end
+
+  def existing_worktrees
+    # Don't memoize - need fresh list after each worktree creation
+    output = `git worktree list 2>/dev/null`
+    output.lines
+      .select { |line| line.include?("#{repo_name}-#{config.branch_name}-worktree-") }
+      .map { |line| File.basename(line.split.first) }
+  rescue
+    []
+  end
+
+  def find_next_worktree_number(suffix = "")
+    i = 1
+    loop do
+      candidate = "#{repo_name}-#{config.branch_name}-worktree-#{i}#{suffix}"
+      return i unless existing_worktrees.include?(candidate)
+      i += 1
+    end
+  end
+
+  def determine_ultra_mode(iteration)
+    if config.ab_test?
+      iteration == 1 ? false : true
+    else
+      config.ultra?
+    end
+  end
+
+  def determine_suffix(iteration)
+    return "" unless config.ab_test?
+    iteration == 1 ? "-regular" : "-ultra"
+  end
+
+  def create_worktree(iteration)
+    current_ultra_mode = determine_ultra_mode(iteration)
+    suffix = determine_suffix(iteration)
+
+    worktree_num = find_next_worktree_number(suffix)
+    worktree_name = "#{repo_name}-#{config.branch_name}-worktree-#{worktree_num}#{suffix}"
+    worktree_branch = worktree_name
+    worktree_path = File.join(parent_dir, worktree_name)
+
+    puts "Creating worktree: #{worktree_name}"
+
+    # Create git worktree
+    unless system("git worktree add -b #{worktree_branch} #{worktree_path}")
+      raise "Failed to create worktree: #{worktree_name}"
+    end
+
+    # Copy ignored files
+    copy_ignored_files_script = File.join(repo_dir, "bin", "parallel-agents", "copy_ignored_files")
+    puts "Copying ignored files..."
+    unless system("#{copy_ignored_files_script} #{repo_dir} #{worktree_path}")
+      raise "Failed to copy ignored files to #{worktree_name}"
+    end
+
+    # Build Claude command
+    claude_cmd = if current_ultra_mode
+      "claude --dangerously-skip-permissions \"*ultrathink #{config.prompt}\""
+    else
+      "claude --dangerously-skip-permissions \"#{config.prompt}\""
+    end
+
+    # Build setup script
+    setup_script = build_setup_script(worktree_path, claude_cmd)
+
+    # Launch Ghostty window
+    puts "Launching Ghostty window for #{worktree_name}..."
+    launch_ghostty(worktree_branch, setup_script)
+
+    puts ""
+
+    { path: worktree_path, branch: worktree_branch }
+  end
+
+  def build_setup_script(worktree_path, claude_cmd)
+    base_commands = [
+      "cd \"#{worktree_path}\"",
+      "echo 'Setting up worktree environment...'",
+      "echo 'Running mise trust...'",
+      "mise trust"
+    ]
+
+    if config.setup_type == "full"
+      base_commands += [
+        "echo 'Running project setup...'",
+        "(bin/parallel-agents/project_setup || true)"
+      ]
+    end
+
+    base_commands += [
+      "echo 'Launching Claude...'",
+      claude_cmd
+    ]
+
+    base_commands.join(" && ")
+  end
+
+  def launch_ghostty(title, setup_script)
+    full_command = "#{setup_script}; exec bash"
+
+    # Use spawn to launch in background without blocking
+    pid = spawn(
+      "open", "-na", "Ghostty.app",
+      "--args",
+      "--title=#{title}",
+      "-e", "bash", "-c", full_command
+    )
+
+    Process.detach(pid)
+  end
+
+  def print_summary(created_worktrees)
+    puts "=" * 80
+    puts "Created #{config.num_worktrees} worktree(s) with setup type '#{config.setup_type}':"
+    puts ""
+
+    created_worktrees.each do |wt|
+      puts "  - #{wt[:path]} (branch: #{wt[:branch]})"
+    end
+
+    puts ""
+    puts "Each worktree has been launched in a new Ghostty window with the prompt:"
+    puts "  \"#{config.prompt}\""
+    puts ""
+    puts "Configuration:"
+    puts "  - Setup type: #{config.setup_type}"
+
+    if config.setup_type == "plan"
+      puts "    - mise trust only"
+    else
+      puts "    - mise trust + bin/parallel-agents/project_setup"
+    end
+
+    puts "  - Ultrathink mode: #{config.ultra? ? 'yes' : 'no'}"
+    puts "  - A/B test mode: #{config.ab_test? ? 'yes' : 'no'}"
+
+    if config.ab_test?
+      puts "    - Creates 2 worktrees, one with ultrathink (-ultra suffix) and one without (-regular suffix)"
+    end
+
+    puts ""
+    puts "To view all active worktrees:"
+    puts "  git worktree list"
+    puts ""
+    puts "To clean up worktrees later, run:"
+    puts "  git worktree remove <worktree-path>"
+    puts ""
+    puts "Note: This command is always additive and never removes existing worktrees."
+    puts "=" * 80
+  end
+end
+
+# Show help message
+def show_help
+  puts <<~HELP
+    Usage: worktree_run_ghostty [OPTIONS] [PROMPT]
+
+    Create git worktrees and launch Claude Code sessions in Ghostty windows.
+
+    OPTIONS:
+        -n, --number <num>          Number of worktrees to create (1-10) [default: 1]
+        -s, --setup-type <type>     Setup type: 'plan' or 'full' [default: plan]
+        -b, --branch-name <name>    Custom branch name prefix [default: current branch]
+        -u, --ultra                 Enable ultrathink mode [default: disabled]
+        -ab, --ab-test              A/B test mode (creates 2 worktrees) [default: disabled]
+        -h, --help                  Show this help message
+
+    SETUP TYPES:
+        plan    Minimal setup - runs mise trust only
+        full    Complete setup - runs mise trust + bin/parallel-agents/project_setup
+
+    EXAMPLES:
+        # Create 1 worktree with plan setup and default prompt
+        ./bin/parallel-agents/worktree_run_ghostty
+
+        # Create 3 worktrees with full setup
+        ./bin/parallel-agents/worktree_run_ghostty -n 3 -s full "Fix the authentication bug"
+
+        # Create worktree with ultrathink enabled
+        ./bin/parallel-agents/worktree_run_ghostty -u "Refactor user model"
+
+        # A/B test mode - creates 2 worktrees (one regular, one with ultrathink)
+        ./bin/parallel-agents/worktree_run_ghostty -ab "write the shortest possible go hello world file"
+        ./bin/parallel-agents/worktree_run_ghostty --ab-test -s full "Implement new feature"
+
+        # Create worktrees with custom branch name
+        ./bin/parallel-agents/worktree_run_ghostty -b feature-x -n 2 "Add new feature"
+
+    NOTES:
+        - Worktrees are created in parent directory with format: <repo>-<branch>-worktree-N[-suffix]
+        - Worktrees are always additive (never removes existing ones)
+        - In A/B test mode, -n and -u options are ignored
+        - Use 'git worktree list' to view all active worktrees
+        - Use 'git worktree remove <path>' to clean up worktrees
+
+  HELP
+end
+
+# Main execution
+begin
+  config = WorktreeConfig.new
+
+  parser = OptionParser.new do |opts|
+    opts.on("-n", "--number NUM", Integer, "Number of worktrees (1-10)") do |n|
+      config.num_worktrees = n
+    end
+
+    opts.on("-s", "--setup-type TYPE", String, "Setup type: plan or full") do |type|
+      config.setup_type = type
+    end
+
+    opts.on("-b", "--branch-name NAME", String, "Custom branch name prefix") do |name|
+      config.branch_name = name
+    end
+
+    opts.on("-u", "--ultra", "Enable ultrathink mode") do
+      config.ultra_mode = true
+    end
+
+    opts.on("-ab", "--ab-test", "A/B test mode") do
+      config.ab_test_mode = true
+    end
+
+    opts.on("-h", "--help", "Show help") do
+      show_help
+      exit 0
+    end
+  end
+
+  parser.parse!
+
+  # Remaining arguments are the prompt
+  config.prompt = ARGV.join(" ") unless ARGV.empty?
+
+  config.validate!
+
+  manager = WorktreeManager.new(config)
+  manager.run
+
+rescue => e
+  puts "Error: #{e.message}"
+  exit 1
+end
