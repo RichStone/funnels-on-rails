@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Agent Project Setup Script
+# This script is called by bin/parallel-agents/worktree_run_ghostty when using --setup-type full
+# Customize this script for your project's specific setup needs
+
+puts "LAUNCHED!"
