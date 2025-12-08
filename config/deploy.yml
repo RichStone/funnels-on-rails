@@ -65,7 +65,7 @@ env:
     DB_PORT: 5432
     REDIS_HOST: social_games-redis # Unusual naming because there is already another kamal setup running on the server.
     REDIS_PORT: 6379
-    HIDE_THINGS: "false"
+    HIDE_THINGS: true
     KAMAL_SETUP: "true"
     # If you have a small server you might want to scale your app down:
     # RAILS_MAX_THREADS: 3
