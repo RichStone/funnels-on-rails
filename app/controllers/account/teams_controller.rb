@@ -4,6 +4,8 @@ class Account::TeamsController < Account::ApplicationController
   def show
     super
 
+    @business = @team.businesses.first_or_initialize
+
     dev_tips_path = Rails.root.join("public", "devmarketingtips.txt")
     rails_reasons_path = Rails.root.join("public", "railsisdeadreasons.txt")
 

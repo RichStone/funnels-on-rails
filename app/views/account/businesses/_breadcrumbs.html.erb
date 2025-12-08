@@ -1,0 +1,5 @@
+<% business ||= @business %>
+<% team ||= @team || business&.team %>
+<%= render 'account/teams/breadcrumbs', team: team %>
+<%= render 'account/shared/breadcrumb', label: t('businesses.label') %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'businesses' %>

@@ -15,3 +15,28 @@
 /* If you need to customize your application's CSS, this is the place to do it. This helps
    avoid merge conflicts in the future when Rails or Bullet Train update their own CSS.
 */
+
+/* Creator Brand Archetype Color Palette */
+.theme-creator {
+  --primary-50: #FEF9E7;
+  --primary-100: #FDF3CF;
+  --primary-200: #F2C36B;
+  --primary-300: #F2CA50;
+  --primary-400: #F2B705;
+  --primary-500: #D98E04;
+  --primary-600: #B87503;
+  --primary-700: #8B5A02;
+  --primary-800: #5E3D01;
+  --primary-900: #40280A;
+
+  --secondary-50: #FEF9E7;
+  --secondary-100: #FDF3CF;
+  --secondary-200: #F2C36B;
+  --secondary-300: #F2CA50;
+  --secondary-400: #F2B705;
+  --secondary-500: #D98E04;
+  --secondary-600: #B87503;
+  --secondary-700: #8B5A02;
+  --secondary-800: #5E3D01;
+  --secondary-900: #40280A;
+}

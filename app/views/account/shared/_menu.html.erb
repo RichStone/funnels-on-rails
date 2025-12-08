@@ -21,23 +21,6 @@
       <%= integrations %>
     <% end %>
   <% end %>
-
-  <% unless disable_developer_menu? %>
-    <%= render 'account/shared/menu/subsection', title: t('menus.main.labels.developers'), expand: expand do %>
-      <%= render 'account/platform/applications/menu_item' %>
-      <%= render 'account/webhooks/outgoing/endpoints/menu_item' if webhooks_enabled? %>
-    <% end %>
-  <% end %>
-
-  <%= render 'account/shared/menu/subsection', title: t('menus.main.labels.team'), expand: expand do %>
-    <%= render 'account/shared/menu/item', url: main_app.edit_account_team_path(current_team), label: t('menus.main.labels.team_settings') do |p| %>
-      <% p.content_for :icon do %>
-        <i class="fal fa-cog ti ti-settings"></i>
-      <% end %>
-    <% end if can? :edit, current_team %>
-    <%= render 'account/memberships/menu_item' %>
-    <%= render 'account/billing/subscriptions/menu_item' if billing_enabled? %>
-  <% end %>
 <% end %>
 
 <% if expand %>

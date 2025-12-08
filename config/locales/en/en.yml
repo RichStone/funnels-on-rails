@@ -1,1 +1,10 @@
 en:
+  menus:
+    main:
+      labels:
+        dashboard: Your ONE Business
+  breadcrumbs:
+    your_dashboard: Your ONE Business
+  teams:
+    breadcrumbs:
+      dashboard: Your ONE Business

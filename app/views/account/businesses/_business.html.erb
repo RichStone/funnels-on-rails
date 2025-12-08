@@ -1,0 +1,25 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :businesses %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% with_attribute_settings object: business do %>
+  <tr data-id="<%= business.id %>">
+    <%= render "shared/tables/checkbox", object: business %>
+    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, business] %></td>
+    <%# 🚅 super scaffolding will insert new fields above this line. %>
+    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+    <td class="buttons">
+      <% unless hide_actions %>
+        <% if can? :edit, business %>
+          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, business], class: 'button-secondary button-smaller' %>
+        <% end %>
+        <% if can? :destroy, business %>
+          <%= button_to t('.buttons.shorthand.destroy'), [:account, business], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(business)) }, class: 'button-secondary button-smaller' %>
+        <% end %>
+        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

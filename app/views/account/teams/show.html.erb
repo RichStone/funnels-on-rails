@@ -1,18 +1,48 @@
 <div class="mx-auto max-w-[600px]">
-  <h2 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">
-    Hey yo, welcome to Funnels on Rails!
-  </h2>
   <% if current_user.subscription_status == User::SUBSCRIPTION_STATUSES[:premium] %>
     <div class="mb-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
       <h3 class="font-medium text-yellow-800">This is your Premium badge ⭐️</h3>
       <p class="mt-2 text-black">
         Shoot Rich an email to chat about your most important question in the 1-on-1 consultation if you haven't done it yet:
-        <a href="mailto:hey@richsteinmetz.com" class="text-blue-600 hover:text-blue-800">hey@richsteinmetz.com</a> ✉️ 
+        <a href="mailto:hey@richsteinmetz.com" class="text-blue-600 hover:text-blue-800">hey@richsteinmetz.com</a> ✉️
         Thanks for your trust! And please cancel your subscription! 😃 You can do so in
         <a href="https://www.funnelsonrails.com/contacts/sign_in" class="text-blue-600 hover:text-blue-800" target="_blank" rel="noopener">the Funnels on Rails Customer Center</a>.
       </p>
     </div>
   <% end %>
+
+  <div class="mb-6 p-4 bg-white dark:bg-slate-700 rounded-lg border border-gray-200 dark:border-slate-600">
+    <div class="flex justify-between items-start mb-4">
+      <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Your ONE Business</h2>
+      <% if @business.persisted? %>
+        <div class="flex items-center space-x-3">
+          <%= link_to edit_account_business_path(@business), class: "text-blue-600 hover:text-blue-800 dark:text-blue-400" do %>
+            <i class="fal fa-edit"></i> Edit
+          <% end %>
+          <%= button_to account_business_path(@business), method: :delete, class: "text-red-600 hover:text-red-800 dark:text-red-400", data: { confirm: "Are you sure you want to remove your business?" } do %>
+            <i class="fal fa-trash"></i> Remove
+          <% end %>
+        </div>
+      <% else %>
+        <%= link_to new_account_team_business_path(@team), class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700" do %>
+          <i class="fal fa-plus mr-2"></i> Add Your Business
+        <% end %>
+      <% end %>
+    </div>
+    <% if @business.persisted? %>
+      <div class="space-y-2">
+        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200"><%= @business.name %></p>
+        <% if @business.description.present? %>
+          <div class="text-gray-600 dark:text-gray-300 prose dark:prose-invert max-w-none">
+            <%= @business.description %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 dark:text-gray-400">Add your business to get started!</p>
+    <% end %>
+  </div>
+
   <% if @random_tip.present? %>
     <div class="mb-4 p-4 dark:bg-blue-50 bg-gray-50 rounded-lg">
       <h3 class="font-medium text-blue-800">Today's Developer Marketing Tip:</h3>
@@ -30,39 +60,6 @@
       <%= image_tag("stop-using-rails-reasons/funnelsonrails-wide.png", class: "w-full") %>
     </div>
   <% end %>
-  <p class="mb-6 text-black dark:text-gray-300 leading-relaxed">
-    It's a sample app running on Rails and Bullet Train, the most powerful open
-    source SaaS framework on top of Rails. The idea is to showcase how you would
-    develop your SaaS with marketing in mind from day one, by having users sign
-    up and potentially upgrading to a paid subscription through a real marketing
-    platform funnel. Moreover, the app shows you how you can stop thinking about
-    subscription management, in-app product creation and so much more. You can
-    delegate all that to a platform that figured it all out long ago and has the
-    best ecommerce experience you could ever build on your own.
-  </p>
-  <p class="mb-6 text-black dark:text-gray-300">
-    The accompanying tutorial to this app is a real world funnel with all bells
-    and whistles, check it out at
-    <%= link_to "funnelsonrails.com", "https://www.funnelsonrails.com", class: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline", target: "_blank", rel: "noopener" %>
-  </p>
-  <p class="mb-6 text-black dark:text-gray-300">
-    This sample app is open source, you can check out the code and see how you
-    can start building yourself
-    <%= link_to "on GitHub", "https://github.com/RichStone/funnels-on-rails", class: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline", target: "_blank", rel: "noopener" %>
-  </p>
-  <p class="mb-6 text-black dark:text-gray-300">
-    This sample app is open source, you can check out the code and see how you
-    can start building yourself
-    <%= link_to "on GitHub", "https://github.com/RichStone/funnels-on-rails", class: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline", target: "_blank", rel: "noopener" %>
-  </p>
-  <p class="mb-6 text-black dark:text-gray-300">
-    If you have any questions, don't hesitate to reach out to
-    <%= link_to "Rich Steinmetz", "https://richstone.io/meet-rich", class: "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline", target: "_blank", rel: "noopener" %>
-  </p>
-  <p class="text-black dark:text-gray-300 mb-6">
-    Other than that, feel free to explore the sample app's UI and Bullet Train's
-    default capabilities! Though, the grand value of this app at the moment are
-    the randomly changing dev marketing tips and Rails is dead reasons above.
-    Come back later to see if more stuff was added here!
-  </p>
+
+  <%# 🚅 super scaffolding will insert new children above this line. %>
 </div>

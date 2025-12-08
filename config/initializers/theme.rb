@@ -1,7 +1,8 @@
 # Bullet Train theme configuration.
 
 # The application's main color scheme.
-BulletTrain::Themes::Light.color = :blue
+# Using custom "creator" brand archetype colors (golden/amber palette)
+BulletTrain::Themes::Light.color = :creator
 
 # The orientation of the navbar.
 # BulletTrain::Themes::Light.navigation = :left

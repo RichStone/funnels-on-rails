@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_10_153848) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_08_174201) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -82,6 +82,44 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_153848) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
+  end
+
+  create_table "builder_levels", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "businesses", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_businesses_on_team_id"
+  end
+
+  create_table "dream_customers", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.integer "age"
+    t.string "gender"
+    t.string "profession"
+    t.string "company_type"
+    t.string "company_role"
+    t.string "income_range"
+    t.string "social_status"
+    t.string "user_vs_buyer"
+    t.text "one_problem"
+    t.string "core_desire"
+    t.text "pain_from"
+    t.text "pleasure_towards"
+    t.text "funnel_hack_notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_dream_customers_on_team_id"
   end
 
   create_table "integrations_stripe_installations", force: :cascade do |t|
@@ -182,6 +220,29 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_153848) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["uid"], name: "index_oauth_stripe_accounts_on_uid", unique: true
     t.index ["user_id"], name: "index_oauth_stripe_accounts_on_user_id"
+  end
+
+  create_table "participations", force: :cascade do |t|
+    t.bigint "rails_builder_id", null: false
+    t.datetime "started_at"
+    t.datetime "left_at"
+    t.text "left_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rails_builder_id"], name: "index_participations_on_rails_builder_id"
+  end
+
+  create_table "rails_builders", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.bigint "builder_level_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.jsonb "details"
+    t.index ["builder_level_id"], name: "index_rails_builders_on_builder_level_id"
+    t.index ["team_id"], name: "index_rails_builders_on_team_id"
   end
 
   create_table "scaffolding_absolutely_abstract_creative_concepts", force: :cascade do |t|
@@ -354,6 +415,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_153848) do
   add_foreign_key "account_onboarding_invitation_lists", "teams"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "businesses", "teams"
+  add_foreign_key "dream_customers", "teams"
   add_foreign_key "integrations_stripe_installations", "oauth_stripe_accounts"
   add_foreign_key "integrations_stripe_installations", "teams"
   add_foreign_key "invitations", "account_onboarding_invitation_lists", column: "invitation_list_id"
@@ -367,6 +430,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_10_153848) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_applications", "teams"
   add_foreign_key "oauth_stripe_accounts", "users"
+  add_foreign_key "participations", "rails_builders"
+  add_foreign_key "rails_builders", "builder_levels"
+  add_foreign_key "rails_builders", "teams"
   add_foreign_key "scaffolding_absolutely_abstract_creative_concepts", "teams"
   add_foreign_key "scaffolding_completely_concrete_tangible_things", "scaffolding_absolutely_abstract_creative_concepts", column: "absolutely_abstract_creative_concept_id"
   add_foreign_key "scaffolding_completely_concrete_tangible_things_assignments", "memberships"

@@ -1,0 +1,99 @@
+en:
+  businesses: &businesses
+    label: &label Businesses
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-puzzle-piece
+    buttons: &buttons
+      new: Add New Business
+      create: Create Business
+      edit: Edit Business
+      update: Update Business
+      destroy: Remove Business
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{business_name}? This will also remove any child resources and can't be undone.
+    business:
+      buttons: *buttons
+    fields: &fields
+      id:
+        heading: Business ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+        api_title: *name
+        api_description: *name
+      description:
+        _: &description Description
+        label: *description
+        heading: *description
+        api_title: *description
+        api_description: *description
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Businesses"
+      index: "List Businesses"
+      create: "Add a New Business"
+      member_actions: "Actions for an Individual Business"
+      show: "Retrieve a Business"
+      update: "Update a Business"
+      destroy: "Delete a Business"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Businesses"
+      contexts:
+        team:
+          header: Businesses
+          description: Below is a list of Businesses that have been added for %{team_name}.
+          description_empty: No Businesses have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{business_name}"
+      header: Business Details
+      description: Below are the details we have for %{business_name}.
+      manage_description: You'll also find options for updating these details or removing %{business_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Business for %{team_name}"
+      header: New Business Details
+      description: Please provide the details of the new Business you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{business_name}"
+      header: Edit Business Details
+      description: You can update the details or settings for %{business_name} below.
+      form: *form
+    notifications:
+      created: Business was successfully created.
+      updated: Business was successfully updated.
+      destroyed: Business was successfully destroyed.
+  account:
+    businesses: *businesses
+  activerecord:
+    attributes:
+      business:
+        name: *name
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at
