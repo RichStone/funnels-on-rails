@@ -60,6 +60,10 @@ When creating a PLAN.md you must take into consideration all of these aspects:
 
 - When completing tasks or plans, run `say "[Task|Plan] completed, Chief"` or sometimes `say "[Task|Plan] completed, Chief Creation Officer"` at the end to provide an audible notification.
 
+### Deployment
+
+Never ever touch or run any deployment or Kamal commands.
+
 ## Project Overview
 This is a Ruby on Rails 8.0 application built on the Bullet Train framework. It integrates with ClickFunnels for user management and power user tracking.
 

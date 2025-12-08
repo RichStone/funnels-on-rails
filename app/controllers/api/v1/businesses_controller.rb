@@ -41,6 +41,8 @@ class Api::V1::BusinessesController < Api::V1::ApplicationController
         *permitted_fields,
         :name,
         :description,
+        :funnel_url,
+        :app_url,
         # 🚅 super scaffolding will insert new fields above this line.
         *permitted_arrays,
         # 🚅 super scaffolding will insert new arrays above this line.

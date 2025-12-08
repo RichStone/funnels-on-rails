@@ -1,4 +1,4 @@
-<% cancel_path ||= business.persisted? ? [:account, business] : [:account, @team] %>
+<% cancel_path ||= [:account, @team] %>
 
 <%= form_with model: business, url: (business.persisted? ? [:account, business] : [:account, @team, :businesses]), class: 'form' do |form| %>
   <%= render "shared/limits/form", form: form, cancel_path: cancel_path do %>
@@ -7,6 +7,8 @@
     <% with_field_settings form: form do %>
       <%= render 'shared/fields/text_field', method: :name, options: {autofocus: true} %>
       <%= render 'shared/fields/trix_editor', method: :description %>
+      <%= render 'shared/fields/text_field', method: :funnel_url %>
+      <%= render 'shared/fields/text_field', method: :app_url %>
       <%# 🚅 super scaffolding will insert new fields above this line. %>
     <% end %>
 

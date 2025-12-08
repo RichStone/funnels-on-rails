@@ -21,6 +21,8 @@ class Api::V1::BusinessesControllerTest < Api::Test
     business = Business.find(business_data["id"])
 
     assert_equal_or_nil business_data['name'], business.name
+    assert_equal_or_nil business_data['funnel_url'], business.funnel_url
+    assert_equal_or_nil business_data['app_url'], business.app_url
     # 🚅 super scaffolding will insert new fields above this line.
 
     assert_equal business_data["team_id"], business.team_id
@@ -80,6 +82,8 @@ class Api::V1::BusinessesControllerTest < Api::Test
       access_token: access_token,
       business: {
         name: 'Alternative String Value',
+        funnel_url: 'Alternative String Value',
+        app_url: 'Alternative String Value',
         # 🚅 super scaffolding will also insert new fields above this line.
       }
     }
@@ -92,6 +96,8 @@ class Api::V1::BusinessesControllerTest < Api::Test
     # But we have to manually assert the value was properly updated.
     @business.reload
     assert_equal @business.name, 'Alternative String Value'
+    assert_equal @business.funnel_url, 'Alternative String Value'
+    assert_equal @business.app_url, 'Alternative String Value'
     # 🚅 super scaffolding will additionally insert new fields above this line.
 
     # Also ensure we can't do that same action as another user.

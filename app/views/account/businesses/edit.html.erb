@@ -1,7 +1,19 @@
 <%= render 'account/shared/page' do |page| %>
   <% page.title t('.section') %>
-  <% page.body.render 'account/shared/box', divider: true do |box| %>
-    <% box.t :description, title: '.header' %>
-    <% box.body.render 'form', business: @business %>
+  <% page.body do %>
+    <%= render 'account/shared/box', divider: true do |box| %>
+      <% box.t :description, title: '.header' %>
+      <% box.body.render 'form', business: @business %>
+    <% end %>
+
+    <% if can? :destroy, @business %>
+      <div class="mt-6 p-4 border border-red-200 dark:border-red-800 rounded-lg bg-red-50 dark:bg-red-900/20">
+        <h3 class="text-lg font-medium text-red-800 dark:text-red-200 mb-2">Danger Zone</h3>
+        <p class="text-sm text-red-600 dark:text-red-300 mb-4">Once you remove your business, there is no going back. Please be certain.</p>
+        <%= button_to account_business_path(@business), method: :delete, class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700", data: { confirm: "Are you sure you want to remove your business? This cannot be undone." } do %>
+          <i class="fal fa-trash mr-2"></i> Remove Business
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>

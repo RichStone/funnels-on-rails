@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_08_174201) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_08_184934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -98,6 +98,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_08_174201) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "funnel_url"
+    t.string "app_url"
     t.index ["team_id"], name: "index_businesses_on_team_id"
   end
 

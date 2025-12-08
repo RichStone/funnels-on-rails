@@ -2,6 +2,8 @@ json.extract! business,
   :id,
   :team_id,
   :name,
+  :funnel_url,
+  :app_url,
   # 🚅 super scaffolding will insert new fields above this line.
   :created_at,
   :updated_at

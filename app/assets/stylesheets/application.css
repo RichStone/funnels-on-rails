@@ -40,3 +40,42 @@
   --secondary-800: #5E3D01;
   --secondary-900: #40280A;
 }
+
+/* Global link styling - use primary brand colors */
+a {
+  color: var(--primary-500);
+}
+
+a:hover {
+  color: var(--primary-700);
+}
+
+/* Dark mode link colors */
+@media (prefers-color-scheme: dark) {
+  a {
+    color: var(--primary-400);
+  }
+
+  a:hover {
+    color: var(--primary-300);
+  }
+}
+
+/* Ensure buttons and nav items don't inherit link colors */
+button a,
+.button a,
+.button-secondary a,
+nav a,
+.breadcrumb a {
+  color: inherit;
+}
+
+/* Prose content links */
+.prose a {
+  color: var(--primary-500);
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: var(--primary-700);
+}

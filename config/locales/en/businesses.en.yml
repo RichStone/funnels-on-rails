@@ -37,6 +37,18 @@ en:
         heading: *description
         api_title: *description
         api_description: *description
+      funnel_url:
+        _: &funnel_url Funnel Url
+        label: *funnel_url
+        heading: *funnel_url
+        api_title: *funnel_url
+        api_description: *funnel_url
+      app_url:
+        _: &app_url App Url
+        label: *app_url
+        heading: *app_url
+        api_title: *app_url
+        api_description: *app_url
       # 🚅 super scaffolding will insert new fields above this line.
       created_at:
         _: &created_at Added
@@ -94,6 +106,8 @@ en:
     attributes:
       business:
         name: *name
+        funnel_url: *funnel_url
+        app_url: *app_url
         # 🚅 super scaffolding will insert new activerecord attributes above this line.
         created_at: *created_at
         updated_at: *updated_at
